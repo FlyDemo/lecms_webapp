@@ -85,6 +85,8 @@ public class UserController {
 	public String UserList(PageBean<UserBean> pb,String role,Model model){
 		if(pb!=null){
 			pb = userService.findAllUserByLeval(pb,role);
+		}else{
+			pb = userService.findAllUserByLeval(new PageBean<UserBean>(),role);
 		}
 		model.addAttribute("pageBean", pb);
 		return "/user/userList";
@@ -93,6 +95,11 @@ public class UserController {
 	
 	@RequestMapping("/editUser")
 	public String editUser(UserBean userBean,String op,Model model){
+		
+		if(null!=userBean.getId()&&!"".equals(userBean.getId())){
+			userBean = (UserBean)commonService.findById(UserBean.class, userBean.getId());
+		}
+		model.addAttribute("userBean",userBean);
 		model.addAttribute("op", op);
 		return "/user/editUserPage";
 	}
@@ -107,5 +114,13 @@ public class UserController {
 		pb = userService.findAllUserByLeval(pb,role);
 		model.addAttribute("pageBean", pb);
 		return "/user/userList";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/saveUser")
+	public boolean saveUser(UserBean userBean){
+		userBean.setPassWord(DigestUtils.md5DigestAsHex(userBean.getPassWord().trim().getBytes()));
+		commonService.merge(userBean);
+		return true;
 	}
 }
