@@ -9,8 +9,25 @@ $("document").ready(function(){
 		$("input[name='passWord']").val("用户密码已经被加密！");
 	}
 	
-	/*这儿需要一个登录名的异步校验*/
+	if("edit"==op){
+		$("input[name='loginName']").attr("readonly","readonly").addClass("readonly").css("background-color","C1C1C1");
+	}
 	
+	/*这儿需要一个登录名的异步校验*/
+	$("input[name='loginName']").on("change",function(){
+		var currentLoginName = $(this).val();
+		$.ajax({
+			url:"/lecms_webapp/UserController/checkLoginName",
+			type:"POST",
+			data: {"loginName":currentLoginName},
+			success:function(data){
+				if("true"!=data){
+					$(this).addClass("err");
+					alert("登录名已被占用！");
+				}
+			}
+		})
+	});
 	
 //	确认按钮
 	$("#sub").on("click",function(){

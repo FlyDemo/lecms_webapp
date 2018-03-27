@@ -123,4 +123,11 @@ public class UserController {
 		commonService.merge(userBean);
 		return true;
 	}
+	
+	@ResponseBody
+	@RequestMapping("/checkLoginName")
+	public boolean checkLoginName(UserBean userBean){
+		String loginName = userBean.getLoginName().trim();
+		return userService.checkLoginName(loginName);
+	}
 }

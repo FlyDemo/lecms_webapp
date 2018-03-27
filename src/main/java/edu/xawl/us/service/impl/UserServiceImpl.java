@@ -1,9 +1,12 @@
 package edu.xawl.us.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import edu.xawl.common.dao.BaseDao;
 import edu.xawl.common.entity.PageBean;
 import edu.xawl.common.service.CommonService;
 import edu.xawl.us.dao.UserDao;
@@ -19,6 +22,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Resource
 	private CommonService commonService;
+	
+	@Resource
+	private BaseDao baseDao;
 	
 	public UserBean login(String userName, String passWord) {
 		UserBean user = userDao.findUserByLoginName(userName);
@@ -43,6 +49,16 @@ public class UserServiceImpl implements UserService {
 		}
 		return null;
 		
+	}
+
+	@Override
+	public boolean checkLoginName(String loginName) {
+		
+		List<Object> findByHql = baseDao.findByHql(" from UserBean where loginName = ? ", loginName);
+		if(findByHql.size()==0){
+			return true;
+		}
+		return false;
 	}
 
 }
