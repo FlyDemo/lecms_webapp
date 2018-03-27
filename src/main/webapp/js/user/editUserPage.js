@@ -22,7 +22,7 @@ $("document").ready(function(){
 			data: {"loginName":currentLoginName},
 			success:function(data){
 				if("true"!=data){
-					$(this).addClass("err");
+					$("input[name='loginName']").attr("placeholder",currentLoginName+"  该名称已被注册，请尝试换一个！").val("").focus();
 					alert("登录名已被占用！");
 				}
 			}
