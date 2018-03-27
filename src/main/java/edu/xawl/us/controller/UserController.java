@@ -88,6 +88,7 @@ public class UserController {
 		}else{
 			pb = userService.findAllUserByLeval(new PageBean<UserBean>(),role);
 		}
+		model.addAttribute("role", role);
 		model.addAttribute("pageBean", pb);
 		return "/user/userList";
 	}
@@ -106,6 +107,7 @@ public class UserController {
 	
 	@RequestMapping("/deleteUser")
 	public String deleteUser(UserBean user,String role,Model model){
+		model.addAttribute("role", role.toString());
 		user = (UserBean) commonService.findById(UserBean.class, user.getId());
 		user.setDeleted(!user.isDeleted());
 		commonService.merge(user);

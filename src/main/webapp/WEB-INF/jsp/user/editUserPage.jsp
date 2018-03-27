@@ -41,8 +41,9 @@
 </head>
 <body>
 	<form class="layui-form userEditForm" action="#" method="post">
-		<input type="hidden" id="op" name="op" value="${op}">
-		<input type="hidden" id="id" name="id" value="${userBean.id}">
+		<input type="hidden" id="op" name="op" value="${op}"/>
+		<input type="hidden" id="id" name="id" value="${userBean.id}"/>
+		<input type="hidden" id="role" name="role" value="${userBean.leval}"/>
 		<div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">姓名</label>

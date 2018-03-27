@@ -1,6 +1,8 @@
 $("document").ready(function(){
 	
 	var op = $("#op").val();
+	var role = $("#role").val();
+	
 	if("view"==op){
 		$("#sub").hide();
 		$("input[type='text']").attr("readonly","readonly").addClass("readonly").css("background-color","C1C1C1");
@@ -54,7 +56,7 @@ $("document").ready(function(){
 				type:"POST",
 				data: {"id":id,"name":name,"loginName":loginName,"passWord":passWord,"mail":mail,"leval":leval,"deleted":deleted},
 				success:function(){
-					$(location).attr("href","/lecms_webapp/UserController/UserList?role=ORDINARY");
+					$(location).attr("href","/lecms_webapp/UserController/UserList?role="+role);
 				}
 			})
 		}
@@ -63,6 +65,6 @@ $("document").ready(function(){
 	
 //	取消按钮
 	$("#cans").on("click",function(){
-		$(location).attr("href","/lecms_webapp/UserController/UserList?role=ORDINARY");
+		$(location).attr("href","/lecms_webapp/UserController/UserList?role="+role);
 	});
 });
