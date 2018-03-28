@@ -1,5 +1,7 @@
 package edu.xawl.quartz.service;
 
+import java.util.HashMap;
+
 public interface QuartzService {
 
 	/**
@@ -14,6 +16,8 @@ public interface QuartzService {
 	 *            触发器名称
 	 * @param triggerGroupName
 	 *            触发器组名称
+	 * @param paramMap
+	 * 			  触发任务时，需要给任务中传入的参数
 	 * @param cls
 	 *            定时任务的class
 	 * @param cron
@@ -21,7 +25,7 @@ public interface QuartzService {
 	 * @exception
 	 * @since 1.0.0
 	 */
-	public void addJob(String jobName, String jobGroupName,String triggerName, String triggerGroupName, Class cls, String cron);
+	public void addJob(String jobName, String jobGroupName,String triggerName, String triggerGroupName,HashMap paramMap, Class cls, String cron);
 
 	/**
 	 * 修改一个定时任务
@@ -35,7 +39,7 @@ public interface QuartzService {
 	 * @param triggerGroup
 	 * @param cron
 	 */
-	public boolean modifyJobTime(String oldjobName,String oldjobGroup, String oldtriggerName, String oldtriggerGroup, String jobName, String jobGroup,String triggerName, String triggerGroup, String cron);
+	public boolean modifyJobTime(String oldjobName,String oldjobGroup, String oldtriggerName, String oldtriggerGroup, String jobName, String jobGroup,String triggerName, String triggerGroup,HashMap paramMap,String cron);
 
 	/**
 	 * 修改触发器调度时间

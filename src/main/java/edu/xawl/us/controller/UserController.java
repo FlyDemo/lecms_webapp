@@ -1,5 +1,9 @@
 package edu.xawl.us.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,8 +17,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.xawl.common.entity.PageBean;
 import edu.xawl.common.service.CommonService;
+import edu.xawl.common.utils.CronUtils;
+import edu.xawl.message.entity.MailContentBean;
+import edu.xawl.message.enums.MailContentType;
+import edu.xawl.quartz.service.QuartzService;
 import edu.xawl.us.entity.UserBean;
 import edu.xawl.us.service.UserService;
+import edu.xawl.work.job.SaveUserMailJob;
 
 /**
  * 用户相关Controller
@@ -34,6 +43,10 @@ public class UserController {
 	
 	@Resource
 	private UserService userService;
+	
+	@Resource
+	private QuartzService quartzService;
+	
 	
 	@RequestMapping("/loginPage")
 	public String loginPage(HttpServletRequest request,Model model){
@@ -123,6 +136,21 @@ public class UserController {
 	public boolean saveUser(UserBean userBean){
 		userBean.setPassWord(DigestUtils.md5DigestAsHex(userBean.getPassWord().trim().getBytes()));
 		commonService.merge(userBean);
+		
+		//用户保存完成后，发送邮件任务，通知用户
+		if(!"".equals(userBean.getMail())){
+			//根据业务类型获取邮件内容
+			List<MailContentBean> mailContentList = commonService.findByHql(" from MailContentBean m where m.contentType=? ", Enum.valueOf(MailContentType.class, "SAVE_USER"));
+			MailContentBean mailContent = null;
+			if(mailContentList.size()>0){
+				mailContent = mailContentList.get(0);
+			}
+			HashMap paramMap = new HashMap();
+			paramMap.put("mailContent", mailContent.getId());
+			paramMap.put("toUser", userBean.getId());
+			String cron = CronUtils.getCronWithSeconds(System.currentTimeMillis()+60*1000);
+			quartzService.addJob(UUID.randomUUID().toString(), "SAVE_USER", UUID.randomUUID().toString(), UUID.randomUUID().toString(),paramMap , SaveUserMailJob.class, cron);
+		}
 		return true;
 	}
 	

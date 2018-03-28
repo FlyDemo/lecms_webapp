@@ -42,7 +42,7 @@ public class CommonServiceImpl implements CommonService{
 		return sessionFactory.getCurrentSession().load(clazz, serilaz);
 	}
 	
-	public <T> List<T> findByHql(String hql, String... args) {
+	public <T> List<T> findByHql(String hql, Object... args) {
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery(hql);
 		for (int i=0;i<args.length;i++) {

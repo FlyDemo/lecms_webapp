@@ -1,10 +1,13 @@
 package edu.xawl.quartz.service.impl;
 
+import java.util.HashMap;
+
 import javax.annotation.Resource;
 
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.JobBuilder;
+import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
@@ -23,13 +26,18 @@ public class QuartzServiceImpl implements QuartzService{
 	
 	@Override
 	public void addJob(String jobName, String jobGroupName, String triggerName,
-			String triggerGroupName, Class cls, String cron) {
+			String triggerGroupName,HashMap paramMap,  Class cls, String cron) {
 		try {
 			// 获取调度器
 			Scheduler sched = quartzScheduler;
 			// 创建一项作业
 			JobDetail job = JobBuilder.newJob(cls)
 					.withIdentity(jobName, jobGroupName).build();
+			
+			//放入需要传递给job的参数
+			JobDataMap jobDataMap = job.getJobDataMap();
+			jobDataMap.putAll(paramMap);
+			
 			// 创建一个触发器
 			CronTrigger trigger = TriggerBuilder.newTrigger()
 					.withIdentity(triggerName, triggerGroupName)
@@ -51,7 +59,7 @@ public class QuartzServiceImpl implements QuartzService{
 	 */
 	@Override
 	public boolean modifyJobTime(String oldjobName, String oldjobGroup, String oldtriggerName, String oldtriggerGroup, String jobName, String jobGroup,
-			String triggerName, String triggerGroup, String cron) {
+			String triggerName, String triggerGroup,HashMap paramMap, String cron) {
 		try {
 			Scheduler sched = quartzScheduler;
 			CronTrigger trigger = (CronTrigger) sched.getTrigger(TriggerKey
@@ -73,7 +81,7 @@ public class QuartzServiceImpl implements QuartzService{
 			// 删除任务
 			sched.deleteJob(jobKey);
 			
-			addJob(jobName, jobGroup, triggerName, triggerGroup, jobClass,
+			addJob(jobName, jobGroup, triggerName, triggerGroup,paramMap, jobClass,
 					cron);
 			
 			return true;

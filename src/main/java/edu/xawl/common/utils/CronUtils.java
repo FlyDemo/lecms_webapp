@@ -26,6 +26,12 @@ public class CronUtils {
 		return null;
 	}
 
+	public static void main(String[] args){
+		long currentTimeMillis = System.currentTimeMillis();
+		String cronWithSeconds = getCronWithSeconds(currentTimeMillis+60*5);
+		boolean validExpression = isValidExpression(cronWithSeconds);
+		System.out.println(validExpression);
+	}
 	
 	/**
 	 * 根据日期对象获取Cron表达式

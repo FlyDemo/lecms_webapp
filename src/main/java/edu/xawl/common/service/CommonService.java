@@ -7,7 +7,7 @@ import edu.xawl.common.entity.PageBean;
 
 
 /**
- * 封装一个公共Dao，提供最基础的一些增删改查。
+ * 封装一个公共Service，提供最基础的一些增删改查。
  * @author Administrator
  *
  */
@@ -34,7 +34,7 @@ public interface CommonService {
 	 * @param args
 	 * @return
 	 */
-	public <T> List<T> findByHql(String hql,String ... args);
+	public <T> List<T> findByHql(String hql,Object ... args);
 	
 	/**
 	 * 查询分页数据
