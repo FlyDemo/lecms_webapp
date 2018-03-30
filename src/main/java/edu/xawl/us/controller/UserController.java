@@ -1,11 +1,14 @@
 package edu.xawl.us.controller;
 
+import java.net.HttpCookie;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.hibernate.SessionFactory;
@@ -56,13 +59,16 @@ public class UserController {
 	
 	@ResponseBody
 	@RequestMapping("/login")
-	public boolean login(UserBean user,HttpServletRequest req,Model model){
+	public boolean login(UserBean user,HttpServletRequest req,HttpServletResponse resp,Model model){
 		HttpSession session = req.getSession();
 		session.removeAttribute("user");
 		UserBean loginUser = userService.login(user.getLoginName().trim(), DigestUtils.md5DigestAsHex(user.getPassWord().trim().getBytes()));
-		System.out.println(user.getLoginName());
 		if(loginUser!=null) {
 			session.setAttribute("user", loginUser);
+			Cookie nameCookie = new Cookie("loginName", loginUser.getLoginName());
+			Cookie passCookie = new Cookie("passWord",user.getPassWord());
+			resp.addCookie(nameCookie);
+			resp.addCookie(passCookie);
 			return true;
 		}else{
 			return false;
@@ -76,17 +82,6 @@ public class UserController {
 		return true;
 	}
 	
-	
-	@RequestMapping("/workIndex")
-	public String workIndex(HttpServletRequest req,Model model){
-		/*HttpSession session = req.getSession();
-		UserBean user = (UserBean) session.getAttribute("user");
-		if(user==null){
-			model.addAttribute("loginMessage", "请先登陆！");
-			return "/index/login";
-		}*/
-		return "/work/workIndex";
-	}
 	
 	@RequestMapping("/userBaseInfo")
 	public String userBaseInfo(){

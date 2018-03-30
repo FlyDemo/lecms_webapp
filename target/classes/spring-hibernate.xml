@@ -84,8 +84,10 @@
 	</tx:advice>
 	
 	<!-- Quartz -->
+	<bean id="jobFactory" class="edu.xawl.quartz.utils.JobFactory"></bean>
 	<bean name="quartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" >
-        <property name="dataSource" ref ="dataSource" />       
+        <property name="dataSource" ref ="dataSource" /> 
+        <property name="jobFactory" ref="jobFactory"/>      
         <property name="applicationContextSchedulerContextKey" value="applicationContextKey"/>
         <property name="configLocation" value="classpath:quartz.properties"/>			
     </bean>

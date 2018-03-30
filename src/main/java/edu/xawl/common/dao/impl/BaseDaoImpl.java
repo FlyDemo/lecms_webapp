@@ -46,7 +46,7 @@ public class BaseDaoImpl implements BaseDao{
 		return 0;
 	}
 
-	public <T> List<T> findByHql(String hql, String... args) {
+	public <T> List<T> findByHql(String hql, Object... args) {
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery(hql);
 		for (int i=0;i<args.length;i++) {

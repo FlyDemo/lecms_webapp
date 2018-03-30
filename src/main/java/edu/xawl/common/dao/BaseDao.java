@@ -26,7 +26,7 @@ public interface BaseDao {
 	 * @param args
 	 * @return
 	 */
-	public <T> List<T> findByHql(String hql,String ... args);
+	public <T> List<T> findByHql(String hql,Object ... args);
 	
 	/**
 	 * 按照id查询对象

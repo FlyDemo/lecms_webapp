@@ -38,7 +38,7 @@
 	    <span>位置：</span>
 	    <ul class="placeul">
 		    <li><a href="${ctx}/home">【首页】</a></li>
-		    <li><a href="${ctx}/UserController/workIndex">【工作台】</a></li>
+		    <li><a href="${ctx}/WorkController/workIndex">【工作台】</a></li>
 	    </ul>
 	    
 	    <div style="position:fixed;right:80px;">

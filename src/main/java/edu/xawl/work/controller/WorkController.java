@@ -2,8 +2,10 @@ package edu.xawl.work.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.xawl.common.entity.PageBean;
 import edu.xawl.common.service.CommonService;
+import edu.xawl.material.entity.MaterialCategoryBean;
 import edu.xawl.us.entity.UserBean;
 import edu.xawl.work.entity.InstitutionBean;
 import edu.xawl.work.entity.NewsBean;
@@ -38,6 +41,24 @@ public class WorkController {
 	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");    
 	    dateFormat.setLenient(false);    
 	    binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));    
+	}
+	
+	@RequestMapping("/workIndex")
+	public String workIndex(HttpServletRequest req,Model model){
+		/*HttpSession session = req.getSession();
+		UserBean user = (UserBean) session.getAttribute("user");
+		if(user==null){
+			model.addAttribute("loginMessage", "请先登陆！");
+			return "/index/login";
+		}*/
+		ServletContext application = req.getSession().getServletContext();
+		List<MaterialCategoryBean> category = (List<MaterialCategoryBean>) application.getAttribute("materialCategory");
+		if(category==null){
+			category = commonService.findByHql("  from MaterialCategoryBean m where m.deleted=? order by m.categorySortNum,m.modifyTime  ", false);
+			application.setAttribute("materialCategory", category);
+		}
+		
+		return "/work/workIndex";
 	}
 	
 	@RequestMapping("/editNewsPage")

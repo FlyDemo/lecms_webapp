@@ -25,7 +25,7 @@
 <script>
 	$(document).ready(function(){
 		$("span.no_read").hide();
-		setInterval(hasMessage,10);
+		setInterval(hasMessage,60*1000);
 		
 		
 	});

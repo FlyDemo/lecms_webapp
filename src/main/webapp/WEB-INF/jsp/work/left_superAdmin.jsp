@@ -29,8 +29,15 @@
 	 <li class="layui-nav-item">
 		<a href="#">器材管理</a>
 		<dl class="layui-nav-child">
+	      <dd><a class="dh" hrefs="${ctx}/MaterialCategoryController/findMaterialCategoryData">器材分类管理</a></dd>
+	      <dd><a class="dh" hrefs="${ctx}/MaterialController/findMaterialDataByCode">器材管理</a></dd>
+	    </dl>
+	  </li>
+	  
+	  <li class="layui-nav-item">
+		<a href="#">消息管理</a>
+		<dl class="layui-nav-child">
 	      <dd><a href="">移动模块</a></dd>
-	      <dd><a href="javascript:;">后台模版</a></dd>
 	      <dd><a href="">电商平台</a></dd>
 	    </dl>
 	  </li>
