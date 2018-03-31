@@ -30,7 +30,7 @@
 		<a href="#">器材管理</a>
 		<dl class="layui-nav-child">
 	      <dd><a class="dh" hrefs="${ctx}/MaterialCategoryController/findMaterialCategoryData">器材分类管理</a></dd>
-	      <dd><a class="dh" hrefs="${ctx}/MaterialController/findMaterialDataByCode">器材管理</a></dd>
+	      <dd><a class="dh" hrefs="${ctx}/MaterialController/findMaterialDataByName">器材管理</a></dd>
 	    </dl>
 	  </li>
 	  

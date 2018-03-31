@@ -107,12 +107,12 @@ function  clickto(){
           <tr>
             <td><table width="100%" cellspacing="0" cellpadding="0">
               <tr>
-                <td width="94%" align="center"><span>器材分类维护</span></td>
+                <td width="94%" align="center"><span>器材管理</span></td>
               </tr>
             </table></td>
             <td><div align="right">
               <span>
-	              <img src="${ctx}/images/add.gif" width="10" height="10" /> <a href="${ctx}/MaterialCategoryController/editCategory?op=create" style="text-decoration:none;">添加</a>  &nbsp;&nbsp;&nbsp;
+	              <img src="${ctx}/images/add.gif" width="10" height="10" /> <a href="${ctx}/MaterialController/editMaterial?op=create" style="text-decoration:none;">添加</a>  &nbsp;&nbsp;&nbsp;
               </span></div></td>
           </tr>
         </table></td>
@@ -121,18 +121,28 @@ function  clickto(){
   </tr>
   <tr>
     <td><table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#a8c7ce" onmouseover="changeto()"  onmouseout="changeback()">
-      <tr>
-        <td width="10%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">分类名称</span></div></td>
-        <td width="15%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">分类编号</span></div></td>
-        <td width="27%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">分类排序</span></div></td>
-        <td width="14%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">基本操作</span></div></td>
+      <tr><!-- 列表实现器材图片.器材名称.器材说明.器材分类.器材价格.器材总量.器材剩余量.操作 -->
+      	<td width="10%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">器材图片</span></div></td>
+        <td width="10%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">器材名称</span></div></td>
+        <td width="5%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">器材分类</span></div></td>
+        <td width="20%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">器材说明</span></div></td>
+        <td width="5%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">器材价格</span></div></td>
+        <td width="5%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">器材总量</span></div></td>
+        <td width="5%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">实验室剩余量</span></div></td>
+        <td width="5%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">已损坏数量</span></div></td>
+        <td width="10%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">基本操作</span></div></td>
       </tr>
-      <c:forEach var="materialCategoryBean" items="${pageBean.rowDatas}">
-	      <tr  id="${materialCategoryBean.id}" class="userDataListTr">
-	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center"><span class="STYLE19">${materialCategoryBean.categoryName}</span></div></td>
-	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"<div align="center">${materialCategoryBean.categoryCode}</div></td>
-	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">${materialCategoryBean.categorySortNum}</div></td>
-	        <td height="20" bgcolor="#FFFFFF"><div align="center" class="STYLE21"><a id="viewBtn" href="#">查看</a> |<a id="editBtn" href="#"> 编辑</a>|<a id="deleteBtn" href="#">删除</a></div></td>
+      <c:forEach var="materialBean" items="${pageBean.rowDatas}">
+	      <tr  id="${materialBean.id}" class="materialListTr">
+	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center"><img alt="${materialBean.materialName}" src="${ctx}/${materialBean.materialImgPath}" height="15" width="15" onclick=""/></div></td>
+	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">${materialBean.materialName}</div></td>
+	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">${materialBean.materialCategory.categoryName}</div></td>
+	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">${materialBean.materialDesc}</div></td>
+	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">${materialBean.price}</div></td>
+	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">${materialBean.total}</div></td>
+	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">${materialBean.surPlus}</div></td>
+	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">${materialBean.badNum}</div></td>
+	        <td height="20" bgcolor="#FFFFFF"><div align="center" class="STYLE21"><a id="viewBtn" href="#">查看</a> |<a id="editBtn" href="#"> 详情 </a>|<a id="deleteBtn" href="#">删除</a></div></td>
 	      </tr>
       </c:forEach>
     </table></td>

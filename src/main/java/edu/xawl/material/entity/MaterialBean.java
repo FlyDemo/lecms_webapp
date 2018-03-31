@@ -65,6 +65,10 @@ public class MaterialBean extends BaseBean{
 	 * 该器材实验室总总数
 	 */
 	private Integer total;
+	/**
+	 * 已经损坏数量
+	 */
+	private Integer badNum;
 	
 	@Column(name="MATERIAL_NAME")
 	public String getMaterialName() {
@@ -152,11 +156,11 @@ public class MaterialBean extends BaseBean{
 	 * @return
 	 */
 	@Transient
-	public Integer getSurplus(){
+	public Integer getSurPlus(){
 		return surPlus;
 	}
 	public void setSurplus(Integer surplus){
-		this.surPlus = surplus;
+		this.surPlus = surPlus;
 	}
 	
 	/**
@@ -171,4 +175,19 @@ public class MaterialBean extends BaseBean{
 	public void setTotal(Integer total){
 		this.total = total;
 	}
+	
+	/**
+	 * 损坏数量
+	 * @return
+	 */
+	@Transient
+	public Integer getBadNum() {
+		return badNum;
+	}
+	public void setBadNum(Integer badNum) {
+		this.badNum = badNum;
+	}
+	
+	
+	
 }

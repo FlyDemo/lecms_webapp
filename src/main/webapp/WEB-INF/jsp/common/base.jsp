@@ -16,5 +16,5 @@
 <script type="text/javascript" src="${ctx}/js/jQuery/jquery.metadata.js"> </script>
 <script type="text/javascript" src="${ctx}/js/myjs/message_cn.js"> </script>
 <script type="text/javascript" src="${ctx}/js/datePlugins/laydate.dev.js"> </script>
-
+<script type="text/javascript" src="${ctx}/js/jQuery/jquery.form.js"> </script>
 <script type="text/javascript" src="${ctx}/js/base/base.js"> </script>

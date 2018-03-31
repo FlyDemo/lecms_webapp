@@ -6,5 +6,7 @@ public interface MaterialDao {
 
 	public Integer findSurplusByName(String materialName);
 
+	public Integer findBadNumByName(String materialName);
+
 
 }

@@ -1,5 +1,6 @@
 package edu.xawl.material.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,6 +11,8 @@ import edu.xawl.common.entity.PageBean;
 import edu.xawl.common.service.CommonService;
 import edu.xawl.material.dao.MaterialDao;
 import edu.xawl.material.entity.MaterialBean;
+import edu.xawl.material.entity.MaterialDetailBean;
+import edu.xawl.material.enums.MaterialStatus;
 import edu.xawl.material.service.MaterialService;
 @Service
 public class MaterialServiceImpl implements MaterialService {
@@ -35,14 +38,28 @@ public class MaterialServiceImpl implements MaterialService {
 			materialBean.setSurplus(surplus);
 		}*/
 		
-		PageBean<MaterialBean> materialPageData = commonService.findByPageQuery(pb, " select m.materialName,m.materialDesc,m.materialCategory,m.price,m.materialCreator,m.materialRepairTime from MaterialBean m where m.deleted=? order by m.categorySortNum,m.modifyTime ", "MaterialBean",false);
+		PageBean<MaterialBean> materialPageData = commonService.findByPageQuery(pb, " select m.materialImgPath,m.materialName,m.materialDesc,m.materialCategory,m.price,m.materialCreator,m.materialRepairTime from MaterialBean m where m.deleted=? order by m.materialCategory.categorySortNum,m.modifyTime ", "MaterialBean",false);
 		List<MaterialBean> rowDatas = materialPageData.getRowDatas();
 		for (MaterialBean materialBean : rowDatas) {
 			Integer totalMaterialCount = materialDao.findCountByMaterialName(materialBean.getMaterialName());
 			Integer surplus = materialDao.findSurplusByName(materialBean.getMaterialName());
+			Integer badNum = materialDao.findBadNumByName(materialBean.getMaterialName());
 			materialBean.setTotal(totalMaterialCount);
 			materialBean.setSurplus(surplus);
+			materialBean.setBadNum(badNum);
 		}
 		return materialPageData;
+	}
+
+	@Override
+	public void saveMaterialDetailBean(String num, MaterialBean materialBean) {
+		Integer materialDetailNum = Integer.valueOf(num);
+		if(materialDetailNum!=0){
+			for (int i = 0; i < materialDetailNum; i++) {
+				commonService.merge(new MaterialDetailBean(materialBean.getMaterialCategory().getCategoryCode()+System.currentTimeMillis(), materialBean, MaterialStatus.NOMAL));
+			}
+		}else{
+			System.out.println("只有器材名称，没有对应的器材生成。。");
+		}
 	}
 }

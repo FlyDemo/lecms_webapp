@@ -1,6 +1,6 @@
 $("document").ready(function(){
 	
-	listPageData("/lecms_webapp/MaterialCategoryController/findMaterialCategoryData");
+	listPageData("/lecms_webapp/MaterialController/findMaterialDataByName");
 	
 	bind();
 	
