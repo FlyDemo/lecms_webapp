@@ -2,7 +2,6 @@ package edu.xawl.material.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +21,9 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import edu.xawl.common.entity.PageBean;
 import edu.xawl.common.service.CommonService;
 import edu.xawl.material.entity.MaterialBean;
+import edu.xawl.material.entity.MaterialCategoryBean;
+import edu.xawl.material.entity.MaterialDetailBean;
+import edu.xawl.material.enums.MaterialStatus;
 import edu.xawl.material.service.MaterialService;
 
 @Controller
@@ -54,16 +56,36 @@ public class MaterialController {
 	 * @param op
 	 * @param model
 	 * @return
+	 * @throws IOException 
+	 * @throws ServletException 
 	 */
 	@RequestMapping("/editMaterial")
-	public String editMaterial(MaterialBean materialBean,String op,Model model){
+	public String editMaterial(MaterialBean materialBean,String op,HttpServletRequest request,HttpServletResponse response,Model model) throws ServletException, IOException{
 		if("create".equalsIgnoreCase(op)){//新建  什么也不用做  坐等保存
 			
-		}else if("view".equalsIgnoreCase(op)||"edit".equalsIgnoreCase(op)){//编辑   带出数据
+		}else if("view".equalsIgnoreCase(op)||"edit".equalsIgnoreCase(op)||"delete".equalsIgnoreCase(op)){//编辑   带出数据
+			if("delete".equalsIgnoreCase(op)){//删除所有器材
+				List<MaterialDetailBean> materialDetails = commonService.findByHql(" from MaterialDetailBean md where md.material=? and md.status!=? ", materialBean,MaterialStatus.DELETED);
+				for (MaterialDetailBean materialDetailBean : materialDetails) {
+					materialDetailBean.setStatus(MaterialStatus.DELETED);
+					commonService.merge(materialDetailBean);
+				}
+				//删除掉这个名称
+				MaterialBean material = (MaterialBean) commonService.findById(MaterialBean.class, materialBean.getId());
+				material.setDeleted(true);
+				commonService.merge(material);
+				
+				request.getRequestDispatcher("/MaterialController/findMaterialDataByName").forward(request, response);
+			}
 			materialBean = materialService.findMaterialById(materialBean.getId().trim());
 			model.addAttribute("materialBean",materialBean);
 		}else if("detail".equalsIgnoreCase(op)){//详情，带出此名称下的器材列表
-			
+			materialBean = (MaterialBean) commonService.findById(MaterialBean.class, materialBean.getId());
+			PageBean<MaterialDetailBean> materialDetails = commonService.findByPageQuery(new PageBean<MaterialDetailBean>(), " from MaterialDetailBean md where md.material=? and md.status!=? ", "MaterialDetailBean", materialBean,MaterialStatus.DELETED);
+			model.addAttribute("pageBean", materialDetails);
+			model.addAttribute("materialBean", materialBean);
+			model.addAttribute("op", op);
+			return "/category/materialDetailList";
 		}
 		model.addAttribute("op", op);
 		return "/category/editMaterial";
@@ -88,7 +110,11 @@ public class MaterialController {
 		}
 		
 		commonService.merge(materialBean);
-		materialService.saveMaterialDetailBean(num,materialBean);
+		if("create".equalsIgnoreCase(op)){
+			MaterialCategoryBean materialCategory = (MaterialCategoryBean) commonService.findById(MaterialCategoryBean.class, materialBean.getMaterialCategory().getId());
+			materialBean.setMaterialCategory(materialCategory);
+			materialService.saveMaterialDetailBean(num,materialBean);
+		}
 		try {
 			request.getRequestDispatcher("/MaterialController/findMaterialDataByName").forward(request, response);
 		} catch (ServletException e) {

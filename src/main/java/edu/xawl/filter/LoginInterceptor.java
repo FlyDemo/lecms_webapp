@@ -72,7 +72,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 					}
 				}
 					
-				request.getRequestDispatcher("/UserController/loginPage").forward(request, response);
+				/*request.getRequestDispatcher("/UserController/loginPage").forward(request, response);*/
+				response.sendRedirect(request.getSession().getServletContext().getContextPath()+"/UserController/loginPage");
 				return false;
 				
 			}

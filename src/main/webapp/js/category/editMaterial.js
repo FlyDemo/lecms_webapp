@@ -27,8 +27,10 @@ $("document").ready(function(){
 	}
 	
 	if("edit"==op){
-		//编号不能修改 
-		$("input[name='categoryCode']").attr("readonly","readonly").addClass("readonly").css("background-color","C1C1C1");
+		//器材总数、实验室剩余、已损坏数量不能修改
+		$("#total").attr("readonly","readonly").addClass("readonly").css("background-color","C1C1C1");
+		$("input[name='surPlus']").attr("readonly","readonly").addClass("readonly").css("background-color","C1C1C1");
+		$("input[name='badNum']").attr("readonly","readonly").addClass("readonly").css("background-color","C1C1C1");
 	}
 	
 

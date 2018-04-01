@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="${ctx}/css/navigation/layui.css">
 <script src="${ctx}/js/navigation/layui.js"></script>
-<script src="${ctx}/js/category/editMaterial.js"></script>
+<script src="${ctx}/js/category/showMaterialDetail.js"></script>
 <style>
 .layui-form-item{
 	padding:20px 0px 10px 30px;
@@ -42,7 +42,7 @@
 <body>
 	<form class="layui-form categoryEditForm" action="#" method="post" enctype="multipart/form-data">
 		<input type="hidden" id="op" name="op" value="${op}"/>
-		<input type="hidden" id="id" name="id" value="${materialBean.id}"/>
+		<input type="hidden" id="materialId" name="materialId" value="${materialBean.id}"/>
 		<div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">器材图片</label>
@@ -59,16 +59,12 @@
 					
 					<input id="img" name="img" type="file" class="required" name="materialImgPath" onchange="previewImage(this);" value="上传图片"/>
 				</div>
-			</div>
-			
+			</div>	
+				
 			<div class="layui-form-item">
-				<label class="layui-form-label">器材分类</label>
-				<div class="layui-input-inline">
-					<select name="materialCategory.categoryCode" lay-filter="interest-search" lay-search lay-write>
-						<c:forEach var="materialCategory" items="${applicationScope.materialCategory}">
-							<option value="${materialCategory.id}" zname="${materialCategory.categoryName}" <c:if test="${materialBean.materialCategory.categoryCode eq materialCategory.categoryCode}">selected</c:if>>${materialCategory.categoryName}</option>
-						</c:forEach>
-					</select>
+				<label class="layui-form-label">器材编号</label>
+				<div class="layui-input-block">
+					<input type="text" id="materialCode" name="materialCode" class="layui-input required" value="${materialDetail.materialCode}">
 				</div>
 			</div>
 			
@@ -121,29 +117,8 @@
 				</div>
 			</div>
 			
-			<div class="layui-form-item">
-				<label class="layui-form-label">器材总数量</label>
-				<div class="layui-input-block">
-					<input type="text" id="total" name="total" class="layui-input required digits" value="${materialBean.total}">
-				</div>
-			</div>
-			
-			<div class="layui-form-item" id="surPlus">
-				<label class="layui-form-label">实验室剩余</label>
-				<div class="layui-input-block">
-					<input type="text" name="surPlus" class="layui-input digits" value="${materialBean.surPlus}">
-				</div>
-			</div>
-			
-			<div class="layui-form-item" id="badNum">
-				<label class="layui-form-label">已损坏数量</label>
-				<div class="layui-input-block">
-					<input type="text" name="badNum" class="layui-input digits" value="${materialBean.badNum}">
-				</div>
-			</div>
-
 			<div style="text-align:center">
-				<input type="button" name="sub" id="sub" class="btn" value="保存"/>	
+				<input type="button" name="sub" id="sub" class="btn" value="添加"/>	
 				<input type="button" name="cans" id="cans" class="btn" value="取消"/>	
 			</div>
 		</div>

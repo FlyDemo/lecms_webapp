@@ -1,45 +1,34 @@
 $("document").ready(function(){
 	
-	listPageData("/lecms_webapp/MaterialController/findMaterialDataByName");
+	var materialId = $("#materialId").val();
 	
-	bind();
+	listPageData("/lecms_webapp/MaterialDetailController/materialDetailDataList?materialId="+materialId);
+	
+	bind(materialId);
 	
 });
 
-var bind = function(){
+var bind = function(materialId){
 	
 	//查看按钮
 	$("tr").find("a#viewBtn").on("click",function(){
-		var id = $(this).parents("tr.materialListTr").attr("id");
-		$(location).attr("href","/lecms_webapp/MaterialController/editMaterial?op=view&id="+id);
-	});
-	
-	//编辑按钮
-	$("tr").find("a#editBtn").on("click",function(){
-		var id = $(this).parents("tr.materialListTr").attr("id");
-		$(location).attr("href","/lecms_webapp/MaterialController/editMaterial?op=edit&id="+id);
-	});
-	
-	//详情按钮
-	$("tr").find("a#detailBtn").on("click",function(){
-		var id = $(this).parents("tr.materialListTr").attr("id");
-		$(location).attr("href","/lecms_webapp/MaterialController/editMaterial?op=detail&id="+id);
-		/*window.open("/lecms_webapp/MaterialController/editMaterial?op=detail&id="+id)*/
+		var id = $(this).parents("tr.materialDetailListTr").attr("id");
+		$(location).attr("href","/lecms_webapp/MaterialDetailController/editMaterialDetil?op=view&id="+id+"&materialId="+materialId);
 	});
 	
 	//删除按钮
 	$("tr").find("a#deleteBtn").on("click",function(){
-		var total=$(this).parent().parent().parent().find("#total").text();
-		var tip = "";
-		if(total>0){
-			tip = "当前名称下存在"+total+"个器材，此操作将会全部，是否进行此操作？";
-		}else{
-			tip = "确认删除吗？";
-		}
-		var con = confirm(tip);
+		var con = confirm("确认删除吗1?");
 		if(con){
-			var id = $(this).parents("tr.materialListTr").attr("id");
-			$(location).attr("href","/lecms_webapp/MaterialController/editMaterial?op=delete&id="+id);
+			var id = $(this).parents("tr.materialDetailListTr").attr("id");
+			$.ajax({
+				url:"/lecms_webapp/MaterialDetailController/editMaterialDetil",
+				type:"POST",
+				data:{"op":"delete","id":id},
+				success:function(){
+					$(location).attr("href","/lecms_webapp/MaterialDetailController/materialDetailDataList?materialId="+materialId)
+				}
+			});
 		}
 	});
 }
