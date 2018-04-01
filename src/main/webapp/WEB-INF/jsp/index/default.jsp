@@ -33,7 +33,7 @@
 
 <body>
 
-	<div class="app-name" style="text-align:center;font-family:宋体;font-size:20px;margin-top:20px;">朝阳实验室器材消耗管理系统</div>
+	<div class="app-name" style="text-align:center;font-family:宋体;font-size:30px;margin:10px;">朝阳实验室器材消耗管理系统</div>
 	<div class="place">
 	    <span>位置：</span>
 	    <ul class="placeul">
@@ -48,7 +48,7 @@
 	    		</c:when>
 	    		<c:otherwise>
 	    			<span>${sessionScope.user.name} 欢迎您</span>
-	    			<span><a id="userExit" href="#">[退出]</a></span>
+	    			<span><a id="userExit" href="${ctx}/UserController/userExit">[退出]</a></span>
 	    		</c:otherwise>
 	    	</c:choose>
 	    		

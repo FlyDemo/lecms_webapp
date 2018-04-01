@@ -77,6 +77,7 @@
         </dl>
       </li>
       <li class="layui-nav-item"><a href="${ctx}/UserController/userExit">安全退出</a></li>
+      <li class="layui-nav-item"><a href="${ctx}/home">首页动态</a></li>
     </ul>
   </div>
 </body>

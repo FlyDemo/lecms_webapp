@@ -75,11 +75,10 @@ public class UserController {
 		}
 	}
 	
-	@ResponseBody
 	@RequestMapping("/userExit")
-	public boolean userExit(HttpServletRequest request){
+	public String userExit(HttpServletRequest request){
 		request.getSession().invalidate();
-		return true;
+		return "/index/login";
 	}
 	
 	

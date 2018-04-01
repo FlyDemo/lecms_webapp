@@ -14,7 +14,6 @@
 	    <dl class="layui-nav-child">
 	      <dd><a class="dh" hrefs="${ctx}/WorkController/findNewsList">最新消息维护</a></dd>
 	      <dd><a class="dh" hrefs="${ctx}/WorkController/findInstitutionList">规章制度维护</a></dd>
-	      <dd><a class="dh" hrefs="${ctx}/WorkController/editIndexInfo">热门器材维护</a></dd>
 	    </dl>
 	  </li>
 	  
