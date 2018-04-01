@@ -21,28 +21,24 @@ public class MaterialDetailBean extends BaseBean{
 	/**
 	 * 器材名称
 	 */
-	private MaterialBean Material;
+	private MaterialBean material;
 	/**
-	 * 器材是否被删除
+	 * 器材状态
 	 */
-//	private boolean deleted;
-	/**
-	 * 器材是否正在被使用
-	 */
-//	private boolean usered;
-	/**
-	 * 是否损坏
-	 */
-//	private boolean bad;
-	
-//	上面两个字段用一个枚举   器材状态代替
 	private MaterialStatus status;
 	
+	
+	
+	public MaterialDetailBean() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public MaterialDetailBean(String materialCode, MaterialBean material,
 			MaterialStatus status) {
 		super();
 		this.materialCode = materialCode;
-		Material = material;
+		this.material = material;
 		this.status = status;
 	}
 	
@@ -52,25 +48,28 @@ public class MaterialDetailBean extends BaseBean{
 	}
 	public void setMaterialCode(String materialCode) {
 		this.materialCode = materialCode;
-	}
-
-	@ManyToOne(targetEntity=MaterialBean.class)
-	@JoinColumn(name="MATERIAL_PUBLIC")
-	public MaterialBean getMaterial() {
-		return Material;
-	}
-	public void setMaterial(MaterialBean material) {
-		Material = material;
-	}
+	}	
 	
 	@Enumerated
 	@Column(name="MATERIAL_STATUS")
 	public MaterialStatus getStatus() {
 		return status;
 	}
+	
 	public void setStatus(MaterialStatus status) {
 		this.status = status;
 	}
+
+	@ManyToOne(targetEntity=MaterialBean.class)
+	@JoinColumn(name="MATERIAL")
+	public MaterialBean getMaterial() {
+		return material;
+	}
+
+	public void setMaterial(MaterialBean material) {
+		this.material = material;
+	}
 	
 	
+
 }

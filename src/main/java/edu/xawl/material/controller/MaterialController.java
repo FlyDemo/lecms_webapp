@@ -60,7 +60,8 @@ public class MaterialController {
 		if("create".equalsIgnoreCase(op)){//新建  什么也不用做  坐等保存
 			
 		}else if("view".equalsIgnoreCase(op)||"edit".equalsIgnoreCase(op)){//编辑   带出数据
-			
+			materialBean = materialService.findMaterialById(materialBean.getId().trim());
+			model.addAttribute("materialBean",materialBean);
 		}else if("detail".equalsIgnoreCase(op)){//详情，带出此名称下的器材列表
 			
 		}
@@ -109,7 +110,7 @@ public class MaterialController {
 	@ResponseBody
 	@RequestMapping("/checkMaterialName")
 	public boolean checkMaterialName(String id,String materialCategory,String materialName){
-		StringBuffer hql = new StringBuffer(" from MaterialBean m where m.materialCategory.categoryCode=? and m.materialName=? and m.deleted=? ");
+		StringBuffer hql = new StringBuffer(" from MaterialBean m where m.materialCategory.id=? and m.materialName=? and m.deleted=? ");
 		List<Object> obParam = new ArrayList<Object>();
 		obParam.add(materialCategory);
 		obParam.add(materialName);
@@ -150,6 +151,6 @@ public class MaterialController {
 			e.printStackTrace();
 		}
         
-        return path;
+        return path.substring(path.indexOf("/upload"));
 	}
 }

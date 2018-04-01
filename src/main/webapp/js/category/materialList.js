@@ -10,8 +10,8 @@ var bind = function(){
 	
 	//查看按钮
 	$("tr").find("a#viewBtn").on("click",function(){
-		var id = $(this).parents("tr.userDataListTr").attr("id");
-		$(location).attr("href","/lecms_webapp/MaterialCategoryController/editCategory?op=view&id="+id);
+		var id = $(this).parents("tr.materialListTr").attr("id");
+		$(location).attr("href","/lecms_webapp/MaterialController/editMaterial?op=view&id="+id);
 	});
 	
 	//编辑按钮

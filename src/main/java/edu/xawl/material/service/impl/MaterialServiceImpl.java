@@ -38,14 +38,14 @@ public class MaterialServiceImpl implements MaterialService {
 			materialBean.setSurplus(surplus);
 		}*/
 		
-		PageBean<MaterialBean> materialPageData = commonService.findByPageQuery(pb, " select m.materialImgPath,m.materialName,m.materialDesc,m.materialCategory,m.price,m.materialCreator,m.materialRepairTime from MaterialBean m where m.deleted=? order by m.materialCategory.categorySortNum,m.modifyTime ", "MaterialBean",false);
+		PageBean<MaterialBean> materialPageData = commonService.findByPageQuery(pb, " from MaterialBean m where m.deleted=? order by m.materialCategory.categorySortNum,m.modifyTime ", "MaterialBean",false);
 		List<MaterialBean> rowDatas = materialPageData.getRowDatas();
 		for (MaterialBean materialBean : rowDatas) {
-			Integer totalMaterialCount = materialDao.findCountByMaterialName(materialBean.getMaterialName());
-			Integer surplus = materialDao.findSurplusByName(materialBean.getMaterialName());
-			Integer badNum = materialDao.findBadNumByName(materialBean.getMaterialName());
+			Integer totalMaterialCount = materialDao.findCountByMaterialName(materialBean.getMaterialName(),materialBean.getMaterialCategory());
+			Integer surplus = materialDao.findSurplusByName(materialBean.getMaterialName(),materialBean.getMaterialCategory());
+			Integer badNum = materialDao.findBadNumByName(materialBean.getMaterialName(),materialBean.getMaterialCategory());
 			materialBean.setTotal(totalMaterialCount);
-			materialBean.setSurplus(surplus);
+			materialBean.setSurPlus(surplus);
 			materialBean.setBadNum(badNum);
 		}
 		return materialPageData;
@@ -61,5 +61,22 @@ public class MaterialServiceImpl implements MaterialService {
 		}else{
 			System.out.println("只有器材名称，没有对应的器材生成。。");
 		}
+	}
+
+	@Override
+	public MaterialBean findMaterialById(String materialId) {
+		String hql = " from MaterialBean m where m.id=? and m.deleted=? ";
+		List<MaterialBean> materialBeanList = commonService.findByHql(hql,materialId,false);
+		MaterialBean materialBean = null;
+		if(materialBeanList.size()>0){
+			materialBean = materialBeanList.get(0);
+			Integer totalMaterialCount = commonService.findByHql(" from MaterialDetailBean md,MaterialBean m where md.material=m and m.id=? and md.status!=? ",materialId,MaterialStatus.DELETED).size();
+			Integer surplus = commonService.findByHql(" from MaterialDetailBean md,MaterialBean m where md.material=m and m.id=? and md.status=? ",materialId,MaterialStatus.NOMAL).size();
+			Integer badNum = commonService.findByHql(" from MaterialDetailBean md,MaterialBean m where md.material=m and m.id=? and md.status=? ",materialId,MaterialStatus.BAD).size();
+			materialBean.setTotal(totalMaterialCount);
+			materialBean.setSurPlus(surplus);
+			materialBean.setBadNum(badNum);
+		}
+		return materialBean;
 	}
 }

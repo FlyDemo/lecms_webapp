@@ -10,17 +10,34 @@ $("document").ready(function(){
 	        elem: '#materialRepairTime'
 	    });
 		
-		laydate({
-	        elem: '#freeUseTime'
-	    });
+		//隐藏实验室剩余 、 损坏
 		
+		$("#surPlus").hide();
+		$("#badNum").hide();
 	}
+	
+	
+	if("view"==op){
+		$("#sub").hide();
+		$("#img").hide();
+		
+		$("input[type='text']").attr("readonly","readonly").addClass("readonly").css("background-color","C1C1C1");
+		$("select").attr("readonly","readonly").addClass("readonly").css("background-color","C1C1C1");
+		$("textarea").attr("readonly","readonly").addClass("readonly").css("background-color","C1C1C1");
+	}
+	
+	if("edit"==op){
+		//编号不能修改 
+		$("input[name='categoryCode']").attr("readonly","readonly").addClass("readonly").css("background-color","C1C1C1");
+	}
+	
 
 	//器材名称变化时，应该根据器材类型+器材名称去查重   如果重复，不允许在此添加，只能点进详情进行添加
 	$("#materialName").on("change",function(){
 		//获取当前器材分类编号
 		var materialId = $("#id").val();
 		var materialCategory = $("option:selected").val();
+		var materialCategoryZName = $("option:selected").attr("zname");
 		var materialName = $("#materialName").val();
 		
 		if($.trim(materialName)!=''){
@@ -31,7 +48,7 @@ $("document").ready(function(){
 				success:function(data){
 					if(data=="true"){
 						//表示重复
-						$("#materialName").attr("placeholder",materialCategory+"   分类下的   "+materialName+"  名称已被创建，如需添加器材数量，请前往对应的器材详情中进行添加！").val("").focus();
+						$("#materialName").attr("placeholder",materialCategoryZName+"   下的   "+materialName+"  名称已被创建，前往对应的器材详情中进行添加！").val("").focus();
 					}
 				}
 			});
@@ -49,7 +66,7 @@ $("document").ready(function(){
 			var valid = $(".categoryEditForm").valid();
 			if(valid){
 				var id = $("input[name='id']").val();
-				var img = $("#img").val();
+				var img = $("#imgSrc").val();
 				var categoryCode = $("option:selected").val();
 				var materialName = $("#materialName").val();
 				var materialDesc = $("#materialDesc").val();
@@ -64,7 +81,7 @@ $("document").ready(function(){
 				$.ajax({
 					url:"/lecms_webapp/MaterialController/saveMaterial",
 					type:"POST",
-					data:$(".categoryEditForm").serialize(),
+					data:{"op":op,"id":id,"materialImgPath":img,"materialDesc":materialDesc,"materialCategory.id":categoryCode,"materialName":materialName,"price":price,"materialRepairTime":materialRepairTime,"freeUseTime":freeUseTime,"materialCreator":materialCreator,"tip":tip,"deleted":deleted,"num":total},
 					success:function(){
 						$(location).attr("href","/lecms_webapp/MaterialController/findMaterialDataByName");
 					}
@@ -77,17 +94,6 @@ $("document").ready(function(){
 	$("#cans").on("click",function(){
 		$(location).attr("href","/lecms_webapp/MaterialController/findMaterialDataByName");
 	});
-	
-	
-	if("view"==op){
-		$("#sub").hide();
-		$("input[type='text']").attr("readonly","readonly").addClass("readonly").css("background-color","C1C1C1");
-	}
-	
-	if("edit"==op){
-		//编号不能修改 
-		$("input[name='categoryCode']").attr("readonly","readonly").addClass("readonly").css("background-color","C1C1C1");
-	}
 	
 	/**
 	 * 编号和名称增加 已存在校验
@@ -208,7 +214,7 @@ var uploadImg = function(file){
             success: function(data, status, xhr) {  
                 // 图片显示地址  
             	console.info(data);
-               /* $("#allUrl").attr("src", data.path);  */
+            	$("#imgSrc").attr("value",data)
             }  
     };  
       

@@ -55,7 +55,9 @@
 							<img alt="${materialBean.materialName}" src="${ctx}/${materialBean.materialImgPath}" width="80px" height="80px"/>
 						</div>
 					</c:if>
-					<input id="img" name="img" type="file" name="materialImgPath" onchange="previewImage(this);" value="上传图片"/>
+					<input type="hidden" name="imgSrc" id="imgSrc" value="${materialBean.materialImgPath}"/>
+					
+					<input id="img" name="img" type="file" class="required" name="materialImgPath" onchange="previewImage(this);" value="上传图片"/>
 				</div>
 			</div>
 			
@@ -64,7 +66,7 @@
 				<div class="layui-input-inline">
 					<select name="materialCategory.categoryCode" lay-filter="interest-search" lay-search lay-write>
 						<c:forEach var="materialCategory" items="${applicationScope.materialCategory}">
-							<option value="${materialCategory.categoryCode}" <c:if test="${materialBean.materialCategory.categoryCode eq materialCategory.categoryCode}">selected</c:if>>${materialCategory.categoryName}</option>
+							<option value="${materialCategory.id}" zname="${materialCategory.categoryName}" <c:if test="${materialBean.materialCategory.categoryCode eq materialCategory.categoryCode}">selected</c:if>>${materialCategory.categoryName}</option>
 						</c:forEach>
 					</select>
 				</div>
@@ -92,16 +94,16 @@
 			</div>
 			
 			<div class="layui-form-item">
-				<label class="layui-form-label">保修期</label>
+				<label class="layui-form-label">保修期截止</label>
 				<div class="layui-input-block">
 					<input type="text" id="materialRepairTime" name="materialRepairTime" class="layui-input required dateISO" value="${materialBean.materialRepairTime}">
 				</div>
 			</div>
 			
 			<div class="layui-form-item">
-				<label class="layui-form-label">可借用时间</label>
+				<label class="layui-form-label" style="width:95px;text-align:left;padding:0 0;">可借用时间(天)</label>
 				<div class="layui-input-block">
-					<input type="text" id="freeUseTime" name="freeUseTime" class="layui-input required dateISO" value="${materialBean.freeUseTime}">
+					<input type="text" id="freeUseTime" name="freeUseTime" class="layui-input required digist" value="${materialBean.freeUseTime}">
 				</div>
 			</div>
 			
@@ -126,14 +128,14 @@
 				</div>
 			</div>
 			
-			<div class="layui-form-item">
+			<div class="layui-form-item" id="surPlus">
 				<label class="layui-form-label">实验室剩余</label>
 				<div class="layui-input-block">
 					<input type="text" name="surPlus" class="layui-input digits" value="${materialBean.surPlus}">
 				</div>
 			</div>
 			
-			<div class="layui-form-item">
+			<div class="layui-form-item" id="badNum">
 				<label class="layui-form-label">已损坏数量</label>
 				<div class="layui-input-block">
 					<input type="text" name="badNum" class="layui-input digits" value="${materialBean.badNum}">

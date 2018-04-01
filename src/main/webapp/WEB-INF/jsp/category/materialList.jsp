@@ -122,7 +122,7 @@ function  clickto(){
   <tr>
     <td><table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#a8c7ce" onmouseover="changeto()"  onmouseout="changeback()">
       <tr><!-- 列表实现器材图片.器材名称.器材说明.器材分类.器材价格.器材总量.器材剩余量.操作 -->
-      	<td width="10%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">器材图片</span></div></td>
+      	<td width="1%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">器材图片</span></div></td>
         <td width="10%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">器材名称</span></div></td>
         <td width="5%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">器材分类</span></div></td>
         <td width="20%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">器材说明</span></div></td>
@@ -134,7 +134,7 @@ function  clickto(){
       </tr>
       <c:forEach var="materialBean" items="${pageBean.rowDatas}">
 	      <tr  id="${materialBean.id}" class="materialListTr">
-	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center"><img alt="${materialBean.materialName}" src="${ctx}/${materialBean.materialImgPath}" height="15" width="15" onclick=""/></div></td>
+	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center"><img alt="${materialBean.materialName}" src="${ctx}/${materialBean.materialImgPath}" height="50" width="50" onclick=""/></div></td>
 	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">${materialBean.materialName}</div></td>
 	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">${materialBean.materialCategory.categoryName}</div></td>
 	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">${materialBean.materialDesc}</div></td>

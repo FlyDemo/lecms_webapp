@@ -12,4 +12,6 @@ public interface MaterialService {
 	 * @param materialBean
 	 */
 	public void saveMaterialDetailBean(String num, MaterialBean materialBean);
+
+	public MaterialBean findMaterialById(String materialId);
 }

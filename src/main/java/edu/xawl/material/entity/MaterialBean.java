@@ -156,10 +156,10 @@ public class MaterialBean extends BaseBean{
 	 * @return
 	 */
 	@Transient
-	public Integer getSurPlus(){
+	public Integer getSurPlus() {
 		return surPlus;
 	}
-	public void setSurplus(Integer surplus){
+	public void setSurPlus(Integer surPlus) {
 		this.surPlus = surPlus;
 	}
 	
@@ -171,7 +171,6 @@ public class MaterialBean extends BaseBean{
 	public Integer getTotal(){
 		return total;
 	}
-	
 	public void setTotal(Integer total){
 		this.total = total;
 	}
