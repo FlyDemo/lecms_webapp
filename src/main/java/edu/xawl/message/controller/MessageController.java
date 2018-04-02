@@ -1,15 +1,19 @@
 package edu.xawl.message.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import edu.xawl.common.entity.PageBean;
 import edu.xawl.common.service.CommonService;
 import edu.xawl.message.entity.MessageBean;
 import edu.xawl.message.enums.MessageState;
@@ -47,13 +51,12 @@ public class MessageController {
 	 * @return
 	 */
 	@RequestMapping("/messageList")
-	public String messageList(HttpServletRequest request,Model model){
+	public String messageList(PageBean<MessageBean> pb,HttpServletRequest request,Model model){
 		UserBean user = (UserBean) request.getSession().getAttribute("user");
-		List<MessageBean> messageList = null;
 		if(user!=null&&!"".equals(user.getId())){
-			messageList = messageService.findMessageList(user);
+			pb = messageService.findMessageList(user,pb);
 		}
-		model.addAttribute("messageList", messageList);
+		model.addAttribute("pageBan", pb);
 		return "/message/messageList";
 	}
 	
@@ -75,18 +78,21 @@ public class MessageController {
 	 * @param request      获取当前user  以便回到自己的列表页面
 	 * @param model		
 	 * @return
+	 * @throws IOException 
+	 * @throws ServletException 
 	 */
 	@RequestMapping("/editMessage")
-	public String editMessage(MessageBean messageBean,String op,HttpServletRequest request,Model model){
-		messageService.changeMessage(messageBean.getId(),op);
-		
-		UserBean user = (UserBean) request.getSession().getAttribute("user");
-		List<MessageBean> messageList = null;
-		if(user!=null&&!"".equals(user.getId())){
-			messageList = messageService.findMessageList(user);
+	public void editMessage(MessageBean messageBean,String op,HttpServletRequest request,HttpServletResponse response,Model model) throws ServletException, IOException{
+		MessageBean message = (MessageBean) commonService.findById(MessageBean.class, messageBean.getId());
+		if("topShow".equalsIgnoreCase(op)){
+			message.setTopShow(messageBean.getTopShow());
+			commonService.merge(message);
+			request.getRequestDispatcher("/MessageController/messageList").forward(request, response);
+		}else if("delete".equalsIgnoreCase(op)){
+			message.setDeleted(true);
+			commonService.merge(message);
+			request.getRequestDispatcher("/MessageController/messageList").forward(request, response);
 		}
-		model.addAttribute("messageList", messageList);
-		return "/message/messageList";
 	}
 
 }

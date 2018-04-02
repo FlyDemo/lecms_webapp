@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import edu.xawl.common.dao.BaseDao;
+import edu.xawl.common.entity.PageBean;
 import edu.xawl.common.service.CommonService;
 import edu.xawl.common.utils.MailUtils;
 import edu.xawl.message.entity.MailContentBean;
@@ -56,6 +57,22 @@ public class MessageServiceImpl implements MessageService {
 		List<MessageBean> messageList = baseDao.findByHql(hql, user,false);
 		return messageList;
 	}
+	
+
+	@Override
+	public PageBean<MessageBean> findMessageList(UserBean user,
+			PageBean<MessageBean> pb) {
+		/**
+		 * 查询用户的消息，要保证一下几点
+		 * 	1.用户置顶的   最上面显示
+		 *  2.未读的其次显示
+		 *  3.已读的按照顺序显示
+		 *  4.删除的不显示
+		 */
+		String hql = " from MessageBean m where m.to=? and m.deleted=? order by m.topShow desc,m.messageState,m.createTime desc ";
+		PageBean<MessageBean> pageBean = commonService.findByPageQuery(pb, hql, "MessageBean",user,false);
+		return pageBean;
+	}
 
 
 	@Override
@@ -74,5 +91,4 @@ public class MessageServiceImpl implements MessageService {
 	public boolean changeMessage(String messageId, String op) {
 		return false;
 	}
-
 }

@@ -1,6 +1,5 @@
 package edu.xawl.us.controller;
 
-import java.net.HttpCookie;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -80,13 +79,7 @@ public class UserController {
 		request.getSession().invalidate();
 		return "/index/login";
 	}
-	
-	
-	@RequestMapping("/userBaseInfo")
-	public String userBaseInfo(){
-		return "/user/userBase";
-	}
-	
+
 	
 	@RequestMapping("/UserList")
 	public String UserList(PageBean<UserBean> pb,String role,Model model){
@@ -127,8 +120,14 @@ public class UserController {
 	
 	@ResponseBody
 	@RequestMapping("/saveUser")
-	public boolean saveUser(UserBean userBean){
-		userBean.setPassWord(DigestUtils.md5DigestAsHex(userBean.getPassWord().trim().getBytes()));
+	public boolean saveUser(UserBean userForm,String op){ //如果op没有值 ，那就是管理员操作，如果不是管理员操作，那就传入是保存基本信息，还是密码
+		UserBean userBean = (UserBean) commonService.findById(UserBean.class,userForm.getId());
+		if("base".equalsIgnoreCase(op)){
+			userBean.setName(userForm.getName());
+			userBean.setMail(userForm.getMail());
+		}else{
+			userBean.setPassWord(DigestUtils.md5DigestAsHex(userForm.getPassWord().trim().getBytes()));
+		}
 		commonService.merge(userBean);
 		
 		//用户保存完成后，发送邮件任务，通知用户
@@ -153,5 +152,15 @@ public class UserController {
 	public boolean checkLoginName(UserBean userBean){
 		String loginName = userBean.getLoginName().trim();
 		return userService.checkLoginName(loginName);
+	}
+	
+	@RequestMapping("/personInfo")
+	public String personInfo(HttpServletRequest request,Model model){
+		UserBean user = (UserBean) request.getSession().getAttribute("user");
+		user=(UserBean) commonService.findById(UserBean.class, user.getId());
+		request.getSession().setAttribute("user", user);
+		model.addAttribute("userBean", user);
+		model.addAttribute("op", "view");
+		return "/personal/editPersonalUserPage";
 	}
 }

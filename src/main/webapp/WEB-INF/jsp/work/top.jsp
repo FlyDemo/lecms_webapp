@@ -72,12 +72,12 @@
          	<span class="no_read"></span>${sessionScope.user.name}
         </a>
         <dl class="layui-nav-child">
-          <dd><a href="#" onClick="hideTip()" >我的消息<span class="no_read"></span></a></dd>
-          <dd><a href="">基本资料</a></dd>
+          <dd><a class="dh" hrefs="${ctx}/MessageController/messageList" onClick="hideTip()" >我的消息<span class="no_read"></span></a></dd>
+          <dd><a class="dh" hrefs="${ctx}/UserController/personInfo">基本资料</a></dd>
         </dl>
       </li>
-      <li class="layui-nav-item"><a href="${ctx}/UserController/userExit">安全退出</a></li>
       <li class="layui-nav-item"><a href="${ctx}/home">首页动态</a></li>
+      <li class="layui-nav-item"><a href="${ctx}/UserController/userExit">安全退出</a></li>
     </ul>
   </div>
 </body>

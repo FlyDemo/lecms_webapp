@@ -44,9 +44,8 @@
 	  <li class="layui-nav-item">
 		<a href="#">个人中心</a>
 		<dl class="layui-nav-child">
-	      <dd><a href="">移动模块</a></dd>
-	      <dd><a href="javascript:;">后台模版</a></dd>
-	      <dd><a href="">电商平台</a></dd>
+	      <dd><a class="dh" hrefs="${ctx}/MessageController/messageList">消息列表</a></dd>
+	      <dd><a class="dh" hrefs="${ctx}/UserController/personInfo">基本资料</a></dd>
 	    </dl>
 	  </li>
 	</ul>
