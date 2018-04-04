@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import edu.xawl.common.entity.PageBean;
 import edu.xawl.common.service.CommonService;
 import edu.xawl.common.utils.CronUtils;
+import edu.xawl.material.entity.BorrowFlow;
+import edu.xawl.material.entity.MaterialDetailBean;
 import edu.xawl.message.entity.MailContentBean;
 import edu.xawl.message.enums.MailContentType;
 import edu.xawl.quartz.service.QuartzService;
@@ -162,5 +164,33 @@ public class UserController {
 		model.addAttribute("userBean", user);
 		model.addAttribute("op", "view");
 		return "/personal/editPersonalUserPage";
+	}
+	
+	/**
+	 * 我的申请
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/myBorrow")
+	public String myBorrow(HttpServletRequest request,Model model){
+		UserBean currentUser = (UserBean) request.getSession().getAttribute("user");
+		PageBean<BorrowFlow> borrow = userService.findMyBorrow(currentUser);
+		model.addAttribute("pageBean", borrow);
+		return "/ordinary/myMark";
+	}
+	
+	//noBack
+	@RequestMapping("/noBack")
+	public String noBack(HttpServletRequest request,Model model){
+		
+		return "/ordinary/myMark";
+	}
+	
+	//myFlow
+	@RequestMapping("/myFlow")
+	public String myFlow(HttpServletRequest request,Model model){
+		
+		return "/ordinary/myMark";
 	}
 }

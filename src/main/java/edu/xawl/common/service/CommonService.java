@@ -39,8 +39,8 @@ public interface CommonService {
 	/**
 	 * 查询分页数据
 	 * @param pb  pageBean对象
-	 * @param className  pageBean泛型的类名称
 	 * @param hql   pageBean中数据来源的hql
+	 * @param className  pageBean泛型的类名称
 	 * @param args  hql中的参数
 	 * @return   返回pageBean
 	 */

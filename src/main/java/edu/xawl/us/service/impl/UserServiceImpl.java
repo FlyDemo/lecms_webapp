@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import edu.xawl.common.dao.BaseDao;
 import edu.xawl.common.entity.PageBean;
 import edu.xawl.common.service.CommonService;
+import edu.xawl.material.entity.BorrowFlow;
+import edu.xawl.material.enums.BorrowFlowStatus;
 import edu.xawl.us.dao.UserDao;
 import edu.xawl.us.entity.UserBean;
 import edu.xawl.us.enums.UserLeval;
@@ -59,6 +61,11 @@ public class UserServiceImpl implements UserService {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public PageBean<BorrowFlow> findMyBorrow(UserBean currentUser) {
+		return userDao.findBorrowFlowWithStatus(currentUser,BorrowFlowStatus.BORROW);
 	}
 
 }

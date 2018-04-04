@@ -83,5 +83,4 @@ public class MaterialDetailController {
 		
 		return true;
 	}
-	
 }

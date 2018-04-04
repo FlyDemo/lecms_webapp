@@ -1,6 +1,5 @@
 package edu.xawl.material.service.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,10 +9,16 @@ import org.springframework.stereotype.Service;
 import edu.xawl.common.entity.PageBean;
 import edu.xawl.common.service.CommonService;
 import edu.xawl.material.dao.MaterialDao;
+import edu.xawl.material.dao.MaterialDetailDao;
+import edu.xawl.material.entity.BorrowFlow;
 import edu.xawl.material.entity.MaterialBean;
+import edu.xawl.material.entity.MaterialCategoryBean;
 import edu.xawl.material.entity.MaterialDetailBean;
+import edu.xawl.material.enums.BorrowFlowStatus;
 import edu.xawl.material.enums.MaterialStatus;
 import edu.xawl.material.service.MaterialService;
+import edu.xawl.us.dao.UserDao;
+import edu.xawl.us.entity.UserBean;
 @Service
 public class MaterialServiceImpl implements MaterialService {
 
@@ -22,7 +27,12 @@ public class MaterialServiceImpl implements MaterialService {
 	
 	@Resource
 	private CommonService commonService;
+	
+	@Resource
+	private MaterialDetailDao materialDetailDao;
 
+	@Resource
+	private UserDao userDao;
 	@Override
 	public PageBean<MaterialBean> findMaterialDataByCode(PageBean<MaterialBean> pb) {
 		/**
@@ -51,6 +61,22 @@ public class MaterialServiceImpl implements MaterialService {
 		return materialPageData;
 	}
 
+
+	@Override
+	public PageBean<MaterialBean> findMaterialDataByCategory(PageBean<MaterialBean> pb,MaterialCategoryBean materialCategory) {
+		pb = commonService.findByPageQuery(pb, " from MaterialBean m where m.deleted=? and m.materialCategory=? order by m.modifyTime,m.createTime ", "MaterialBean", false,materialCategory);
+		List<MaterialBean> rowDatas = pb.getRowDatas();
+		for (MaterialBean materialBean : rowDatas) {
+			Integer totalMaterialCount = materialDao.findCountByMaterialName(materialBean.getMaterialName(),materialBean.getMaterialCategory());
+			Integer surplus = materialDao.findSurplusByName(materialBean.getMaterialName(),materialBean.getMaterialCategory());
+			Integer badNum = materialDao.findBadNumByName(materialBean.getMaterialName(),materialBean.getMaterialCategory());
+			materialBean.setTotal(totalMaterialCount);
+			materialBean.setSurPlus(surplus);
+			materialBean.setBadNum(badNum);
+		}
+		return pb;
+	}
+	
 	@Override
 	public void saveMaterialDetailBean(String num, MaterialBean materialBean) {
 		Integer materialDetailNum = Integer.valueOf(num);
@@ -78,5 +104,43 @@ public class MaterialServiceImpl implements MaterialService {
 			materialBean.setBadNum(badNum);
 		}
 		return materialBean;
+	}
+
+
+	/**
+	 * BORROW
+	 */
+	@Override
+	public boolean borrowMateerial(List<MaterialDetailBean> materialDetail,
+			String num,UserBean borrower) {
+		BorrowFlow bf = new BorrowFlow();
+		return false;
+	}
+
+
+	@Override
+	public boolean borrowMaterial(BorrowFlow borrowFlow) {
+		String materialId = borrowFlow.getMaterial().getId();
+		List<MaterialDetailBean> materialDetailList = materialDetailDao.findNomalMaterialDetailByMaterialId(materialId);
+		
+		if(borrowFlow.getNum()>materialDetailList.size()){
+			return false;
+		}else{
+			UserBean reviewer = userDao.findUserByLoginName("admin");
+			borrowFlow.setReviewer(reviewer);
+			borrowFlow.setCurrentPeople(reviewer);
+			borrowFlow.setBorrowStatus(BorrowFlowStatus.BORROW);
+			
+			synchronized (reviewer) {
+				for (int i=0;i<borrowFlow.getNum();i++) {
+					MaterialDetailBean m = materialDetailList.get(i);
+					m.setStatus(MaterialStatus.REVIEW);
+					commonService.merge(m);
+				}
+			}
+			
+			commonService.merge(borrowFlow);
+		}
+		return true;
 	}
 }

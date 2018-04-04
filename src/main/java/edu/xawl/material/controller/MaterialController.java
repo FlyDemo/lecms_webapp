@@ -20,6 +20,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import edu.xawl.common.entity.PageBean;
 import edu.xawl.common.service.CommonService;
+import edu.xawl.material.entity.BorrowFlow;
 import edu.xawl.material.entity.MaterialBean;
 import edu.xawl.material.entity.MaterialCategoryBean;
 import edu.xawl.material.entity.MaterialDetailBean;
@@ -47,8 +48,79 @@ public class MaterialController {
 	public String findMaterialDataByName(PageBean<MaterialBean> pb,Model model){
 		pb = materialService.findMaterialDataByCode(pb);
 		model.addAttribute("pageBean", pb);
-		return "/category/materialList";
+		return "/ordinary/materialList";
 	}
+	
+	
+	@RequestMapping("/findMaterialDataByCategory")
+	public String findMaterialDataByCategory(PageBean<MaterialBean>pb,String categoryId,Model model){
+		MaterialCategoryBean materialCategory = (MaterialCategoryBean) commonService.findById(MaterialCategoryBean.class, categoryId);
+		pb=materialService.findMaterialDataByCategory(pb,materialCategory);
+		model.addAttribute("pageBean", pb);
+		model.addAttribute("materialCategory", materialCategory);
+		return "/ordinary/materialList";
+	}
+	
+	/**
+	 * ordinaryViewMaterial
+	 * @param materialBean
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/ordinaryViewMaterial")
+	public String ordinaryViewMaterial(MaterialBean materialBean,Model model){
+		materialBean = (MaterialBean) commonService.findById(MaterialBean.class, materialBean.getId());
+		List<Object> findByHql = commonService.findByHql(" from MaterialDetailBean md where md.status=? and md.material=? ", MaterialStatus.NOMAL,materialBean);
+		materialBean.setSurPlus(findByHql.size());
+		String categoryId = materialBean.getMaterialCategory().getId();
+		model.addAttribute("categoryId", categoryId);
+		model.addAttribute("materialBean", materialBean);
+		return "/ordinary/viewMaterial";
+	}
+	
+	@RequestMapping("/borrowMaterialPage")
+	public String borrowMaterialPage(MaterialBean material,Model model){
+		material = materialService.findMaterialById(material.getId());
+		model.addAttribute("materialBean", material);
+		return "/ordinary/borrowMaterial";
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping("/borrowMaterial")
+	public boolean borrowMaterial(BorrowFlow borrowFlow,HttpServletRequest request){
+		return materialService.borrowMaterial(borrowFlow);
+	}
+	
+	/**
+	 * borrowMaterial
+	 * @param material
+	 * @return
+	 *//*
+	@ResponseBody
+	@RequestMapping("/borrowMaterial")
+	public boolean borrowMaterial(MaterialBean material,String num,String borrowContent,HttpServletRequest request){
+		Integer number = 0;
+		UserBean borrower = (UserBean)request.getSession().getAttribute("user");
+		try{
+			number = Integer.valueOf(num);
+		}catch(Exception e){
+			System.out.println("===================borrow error==========================");
+			System.out.println("caused by"+borrower.getName());
+		}
+		
+		material = (MaterialBean) commonService.findById(MaterialBean.class, material.getId());
+		List<MaterialDetailBean> materialDetail = commonService.findByHql(" from MaterialDetailBean md where md.status=? and md.material=? ", MaterialStatus.NOMAL,material);
+		
+		boolean flag = false;
+		
+		if(materialDetail.size()>=number){
+			flag = materialService.borrowMateerial(materialDetail,num,borrower);
+		}
+		
+		
+		return flag;
+	}*/
 	
 	/**
 	 * 新建、编辑 器材

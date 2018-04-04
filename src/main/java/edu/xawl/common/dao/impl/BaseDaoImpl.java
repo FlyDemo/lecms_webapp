@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import edu.xawl.common.dao.BaseDao;
 import edu.xawl.common.entity.BaseBean;
+import edu.xawl.common.entity.PageBean;
 
 @SuppressWarnings("restriction")
 @Repository
@@ -59,6 +60,44 @@ public class BaseDaoImpl implements BaseDao{
 		Session session = sessionFactory.getCurrentSession();
 		return (List<T>) session.load(clazz, seri);
 		
+	}
+	
+	public <T> PageBean<T> findByPageQuery(PageBean<T> pageBean, String hql,String className,
+			Object... obj) {
+		if(pageBean.getCurrentPage()==null||"0".equals(pageBean.getCurrentPage())) pageBean.setCurrentPage(1);
+		
+		if(pageBean.getPageSize()==null||"0".equals(pageBean.getPageSize())) pageBean.setPageSize(10);
+		
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery(hql);
+		if(obj!=null&&obj.length>0){
+			for (int i=0;i<obj.length;i++) {
+				query.setParameter(i, obj[i]);
+			}
+		}
+		
+		//如果不知道一共多少条，先查询多少条
+		if(pageBean.getTotalCount()==null){
+			List list = query.list();
+			if(list!=null){
+				pageBean.setTotalCount(list.size());
+			}
+		}
+		
+		
+		query.setFirstResult((pageBean.getCurrentPage()-1)*pageBean.getPageSize());
+		query.setMaxResults(pageBean.getPageSize());
+		List list = query.list();
+		pageBean.setRowDatas(list);
+		
+		/*if(pageBean.getTotalCount()==null&&className!=null&&!"".equals(className)){
+			Query query2 = session.createQuery(hql);
+			query2.setParameter(0, false);
+
+			pageBean.setTotalCount(Integer.valueOf(query2.list().get(0).toString()));
+		}
+		*/
+		return pageBean;
 	}
 
 }

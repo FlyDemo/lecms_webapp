@@ -20,5 +20,9 @@ public enum MaterialStatus {
 	/**
 	 * 删除状态，页面不可见
 	 */
-	DELETED 
+	DELETED,
+	/**
+	 * 已经申请正在审核状态
+	 */
+	REVIEW
 }

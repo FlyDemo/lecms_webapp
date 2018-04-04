@@ -3,6 +3,7 @@ package edu.xawl.common.dao;
 import java.util.List;
 
 import edu.xawl.common.entity.BaseBean;
+import edu.xawl.common.entity.PageBean;
 
 public interface BaseDao {
 	
@@ -35,4 +36,14 @@ public interface BaseDao {
 	 * @return
 	 */
 	public <T> List<T> find(Class clazz,String seri);
+	
+	/**
+	 * 查询分页数据
+	 * @param pb  pageBean对象
+	 * @param hql   pageBean中数据来源的hql
+	 * @param className  pageBean泛型的类名称
+	 * @param args  hql中的参数
+	 * @return   返回pageBean
+	 */
+	public<T> PageBean<T> findByPageQuery(PageBean<T> pb,String className,String hql,Object ...obj);
 }
