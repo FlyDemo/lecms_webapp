@@ -82,7 +82,9 @@ public class MaterialServiceImpl implements MaterialService {
 		Integer materialDetailNum = Integer.valueOf(num);
 		if(materialDetailNum!=0){
 			for (int i = 0; i < materialDetailNum; i++) {
-				commonService.merge(new MaterialDetailBean(materialBean.getMaterialCategory().getCategoryCode()+System.currentTimeMillis(), materialBean, MaterialStatus.NOMAL));
+				MaterialDetailBean materialDetailBean = new MaterialDetailBean(materialBean.getMaterialCategory().getCategoryCode()+System.currentTimeMillis(), materialBean, MaterialStatus.NOMAL);
+				materialDetailBean.setUsedNum(0);
+				commonService.merge(materialDetailBean);
 			}
 		}else{
 			System.out.println("只有器材名称，没有对应的器材生成。。");

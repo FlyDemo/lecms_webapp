@@ -4,12 +4,16 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.xawl.common.service.CommonService;
 import edu.xawl.material.entity.MaterialBean;
+import edu.xawl.material.entity.MaterialDetailBean;
+import edu.xawl.material.enums.MaterialStatus;
 import edu.xawl.work.entity.InstitutionBean;
 import edu.xawl.work.entity.NewsBean;
 
@@ -52,6 +56,7 @@ public class HomeController {
 			subList2 = findByHql2;
 		}
 		
+		model.addAttribute("materialAll",findByHql2);
 		model.addAttribute("material", subList2);
 		
 		return "/index/default";
@@ -71,5 +76,22 @@ public class HomeController {
 		model.addAttribute("bean", it);
 		model.addAttribute("flag", "it");
 		return "/index/viewPage";
+	}
+	
+	/**
+	 * 使用次数   / 可使用次数
+	 * @param id
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/indexConsume")
+	public Object indexConsume(String id){
+		JSONObject obj = new JSONObject();
+		MaterialBean material = (MaterialBean) commonService.findById(MaterialBean.class, id);
+		String hql = " select SUM(mdb.usedNum) from MaterialDetailBean mdb where mdb.material=? and mdb.status!=? ";
+		List<Integer> materialDetails = commonService.findByHql(hql, material,MaterialStatus.DELETED);
+		obj.put("canUse", material.getUseNum());
+		obj.put("used", materialDetails.get(0));
+		return obj.toString();
 	}
 }

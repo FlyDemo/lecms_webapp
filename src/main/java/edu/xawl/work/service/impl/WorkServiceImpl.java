@@ -69,6 +69,7 @@ public class WorkServiceImpl implements WorkService {
 					illegal++;
 				}
 				md.setStatus(MaterialStatus.USED);
+				md.setUsedNum(md.getUsedNum()+1);
 				baseDao.merge(md);
 				MaterialDetailFlowBean materialDetailFlow = new MaterialDetailFlowBean();
 				materialDetailFlow.setBorrowFlow(borrowFlow);

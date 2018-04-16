@@ -94,6 +94,13 @@
 			</div>
 			
 			<div class="layui-form-item">
+				<label class="layui-form-label" style="width:95px;text-align:left;padding:0 0;">理论使用次数</label>
+				<div class="layui-input-block">
+					<input type="text" id="useNum" name="useNum" class="layui-input required digist" value="${materialBean.useNum}">
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
 				<label class="layui-form-label">保修期截止</label>
 				<div class="layui-input-block">
 					<input type="text" id="materialRepairTime" name="materialRepairTime" class="layui-input required dateISO" value="${materialBean.materialRepairTime}">

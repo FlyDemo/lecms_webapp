@@ -80,11 +80,13 @@ $("document").ready(function(){
 				var total = $("#total").val();
 				var tipNum = $("#tipNum").val();
 				var deleted = false;
+				//增加理论使用次数
+				var useNum = $("#useNum").val();
 				
 				$.ajax({
 					url:"/lecms_webapp/MaterialController/saveMaterial",
 					type:"POST",
-					data:{"op":op,"id":id,"materialImgPath":img,"materialDesc":materialDesc,"tipNum":tipNum,"materialCategory.id":categoryCode,"materialName":materialName,"price":price,"materialRepairTime":materialRepairTime,"freeUseTime":freeUseTime,"materialCreator":materialCreator,"tip":tip,"deleted":deleted,"num":total},
+					data:{"op":op,"id":id,"materialImgPath":img,"materialDesc":materialDesc,"useNum":useNum,"tipNum":tipNum,"materialCategory.id":categoryCode,"materialName":materialName,"price":price,"materialRepairTime":materialRepairTime,"freeUseTime":freeUseTime,"materialCreator":materialCreator,"tip":tip,"deleted":deleted,"num":total},
 					success:function(){
 						$(location).attr("href","/lecms_webapp/MaterialController/findMaterialDataByName");
 					}

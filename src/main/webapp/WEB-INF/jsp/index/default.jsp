@@ -35,7 +35,7 @@
 
 <body>
 
-	<div class="app-name" style="text-align:center;font-family:宋体;font-size:30px;margin:10px;">朝阳实验室器材消耗管理系统</div>
+	<div class="app-name" style="text-align:center;font-family:宋体;font-size:30px;margin:10px;">朝阳实验室实验耗材使用管理系统</div>
 	<div class="place">
 	    <span>位置：</span>
 	    <ul class="placeul">
@@ -71,29 +71,31 @@
         
     <div class="maintj">  
     <table id='myTable5'>
-				
-				<select>
-					<option>1</option>
-					<option>2</option>
-					<option>3</option>
-					<option>4</option>
-				</select>
-				<lable>耗材率如图所示：</lable>
 				<thead>
+				<div style="margin-top:-17px;">
+					<select id="materialConsume">
+						<c:forEach var="material" items="${materialAll}">
+							<option value="${material.id}">${material.materialName}</option>
+						</c:forEach>
+					</select>
+					<lable>耗材率如图所示：</lable>
+				</div>
+				
 					<tr>
-						<th></th>
-						<th>损坏次数</th>
-						<th>总数量</th>
+						<th>
+						</th>
+						<th>已使用次数</th>
+						<th>理论剩余次数</th>
 					</tr>
 				</thead>
 					<tbody>
 					<tr>
 						<th></th>
-						<td class="t3">1000</td>
-						<td class="t1">100</td>	
+						<td id="tused">0</td>
+						<td id="tcanUse">0</td>	
 					</tr>
 				</tbody>
-			</table>  
+		</table>  
     </div>
     
     </div>

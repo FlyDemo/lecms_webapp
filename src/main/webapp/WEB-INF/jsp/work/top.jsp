@@ -64,7 +64,7 @@
     <div class="layui-logo">MorningSun   朝阳实验室</div>
     <!-- 头部区域  -->
     <ul class="layui-nav layui-layout-left" style="width:100%;font-family:宋体;float:top;"> 
-    	<li style="font-size:30px;margin-left:25%;">朝阳实验室实验耗材管理系统</li>
+    	<li style="font-size:30px;margin-left:25%;">朝阳实验室实验耗材使用管理系统</li>
     </ul>
     <ul class="layui-nav layui-layout-right">
       <li class="layui-nav-item">
