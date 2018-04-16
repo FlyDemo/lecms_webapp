@@ -18,4 +18,16 @@ public interface UserService {
 	 * @return
 	 */
 	public PageBean<BorrowFlow> findMyBorrow(UserBean currentUser);
+
+	public PageBean<BorrowFlow> findMyNoBack(UserBean currentUser);
+
+	public PageBean<BorrowFlow> findMyGoBack(UserBean currentUser);
+
+	public PageBean<BorrowFlow> findOverTimeList(UserBean currentUser);
+
+	public void cansMyBorrow(String id);
+
+	public void back(BorrowFlow borrowFlow);
+
+	public void cansBack(BorrowFlow borrowFlow);
 }

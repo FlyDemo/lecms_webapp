@@ -27,6 +27,7 @@
   
   <!-- 内容主体区域 -->
   <div class="layui-body" id="content">
+  	<c:import url="/right"></c:import>
   </div>
 	
   <!-- 页脚 -->

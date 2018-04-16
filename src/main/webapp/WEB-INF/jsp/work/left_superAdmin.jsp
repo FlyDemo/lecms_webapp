@@ -9,6 +9,15 @@
 </head>
 <body>
 	<ul class="layui-nav layui-nav-tree"  lay-filter="test" style="height:100%">
+	
+	 <li class="layui-nav-item">
+	    <a class="">我的待办</a>
+	    <dl class="layui-nav-child">
+	      <dd><a class="dh" hrefs="${ctx}/WorkController/dealteBorrowList">申请待办</a></dd>
+	      <dd><a class="dh" hrefs="${ctx}/WorkController/dealteBackList">归还待办</a></dd>
+	    </dl>
+	  </li>
+	
 	  <li class="layui-nav-item">
 	    <a class="">首页信息维护</a>
 	    <dl class="layui-nav-child">
@@ -32,15 +41,7 @@
 	      <dd><a class="dh" hrefs="${ctx}/MaterialController/findMaterialDataByName">器材管理</a></dd>
 	    </dl>
 	  </li>
-	  
-	  <li class="layui-nav-item">
-		<a href="#">消息管理</a>
-		<dl class="layui-nav-child">
-	      <dd><a href="">移动模块</a></dd>
-	      <dd><a href="">电商平台</a></dd>
-	    </dl>
-	  </li>
-	  
+	 
 	  <li class="layui-nav-item">
 		<a href="#">个人中心</a>
 		<dl class="layui-nav-child">

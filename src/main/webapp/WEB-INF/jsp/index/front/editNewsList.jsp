@@ -131,7 +131,7 @@ function  clickto(){
       </tr>
       <c:forEach var="newsBean" items="${pageBean.rowDatas}">
 	      <tr  id="${newsBean.id}" class="newsDataListTr">
-	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center"><span class="STYLE19">${newsBean.newsTitle}</span></div></td>
+	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center"><span title="${newsBean.newsTitle}" class="STYLE19">${newsBean.newsTitle.length()>6?newsBean.newsTitle.substring(0,6):newsBean.newsTitle}<c:if test="${newsBean.newsTitle.length()>6}">..</c:if></span></div></td>
 	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"<div align="center">${newsBean.newsTime}</div></td>
 	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">${newsBean.createTime}</div></td>
 	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">${newsBean.creator.name}</div></td>

@@ -15,7 +15,8 @@
 	    <dl class="layui-nav-child">
 	      <dd><a class="dh" hrefs="${ctx}/UserController/myBorrow">我的申请</a></dd>
 		  <dd><a class="dh" hrefs="${ctx}/UserController/noBack">未还器材</a></dd>
-	      <dd><a class="dh" hrefs="${ctx}/UserController/myFlow">已还器材</a></dd>
+	      <dd><a class="dh" hrefs="${ctx}/UserController/goBack">已还器材</a></dd>
+	      <dd><a class="dh" hrefs="${ctx}/UserController/overTimeList">逾期记录</a></dd>
 	    </dl>
 	  </li>
 	  
@@ -26,15 +27,6 @@
 	      <c:forEach var="materialCategory" items="${applicationScope.materialCategory}">
 	      	<dd><a class="dh" hrefs="${ctx}/MaterialController/findMaterialDataByCategory?categoryId=${materialCategory.id}">${materialCategory.categoryName}</a></dd>
 	      </c:forEach>
-	    </dl>
-	  </li>
-	  
-	  <li class="layui-nav-item">
-		<a href="#">器材归还</a>
-		<dl class="layui-nav-child">
-	      <dd><a href="">移动模块</a></dd>
-	      <dd><a href="javascript:;">后台模版</a></dd>
-	      <dd><a href="">电商平台</a></dd>
 	    </dl>
 	  </li>
 	  

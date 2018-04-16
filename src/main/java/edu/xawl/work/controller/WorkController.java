@@ -1,12 +1,15 @@
 package edu.xawl.work.controller;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -19,7 +22,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.xawl.common.entity.PageBean;
 import edu.xawl.common.service.CommonService;
+import edu.xawl.material.entity.BorrowFlow;
 import edu.xawl.material.entity.MaterialCategoryBean;
+import edu.xawl.material.entity.MaterialDetailBean;
+import edu.xawl.material.entity.MaterialDetailFlowBean;
+import edu.xawl.material.enums.MaterialDetailOp;
+import edu.xawl.material.enums.MaterialStatus;
 import edu.xawl.us.entity.UserBean;
 import edu.xawl.work.entity.InstitutionBean;
 import edu.xawl.work.entity.NewsBean;
@@ -142,6 +150,76 @@ public class WorkController {
 			commonService.merge(ins);
 		}
 		return true;
+	}
+	
+	
+	@RequestMapping("/dealteBorrowList")
+	public String dealteBorrowList(Model model){
+		PageBean<BorrowFlow> pb = workService.findDealteBorrowList();
+		model.addAttribute("pageBean", pb);
+		return "/dealteWork/admin/dealteBorrow";
+	}
+	
+	@RequestMapping("/toDealte")
+	public String toDealte(BorrowFlow borrowFlow,String op,Model model){
+		borrowFlow = (BorrowFlow) commonService.findById(BorrowFlow.class, borrowFlow.getId());
+		model.addAttribute("borrow", borrowFlow);
+		model.addAttribute("op", op);
+		return "/dealteWork/admin/dealtePage";
+	}
+	
+	@RequestMapping("/toDealteBack")
+	public String toDealteBack(BorrowFlow borrowFlow,String op,Model model){
+		borrowFlow = (BorrowFlow) commonService.findById(BorrowFlow.class, borrowFlow.getId());
+		List<MaterialDetailFlowBean> findByHql = commonService.findByHql(" from MaterialDetailFlowBean mdf where mdf.borrowFlow=? ", borrowFlow);
+		borrowFlow.setDetails(findByHql);
+		model.addAttribute("borrow", borrowFlow);
+		model.addAttribute("op", op);
+		return "/dealteWork/admin/dealteBackPage";
+	}
+	
+	@RequestMapping("/dealte")
+	public void dealte(BorrowFlow borrowFlow,String op,String materials,HttpServletRequest request,HttpServletResponse response,Model model) throws ServletException, IOException{
+		String reviewContent = borrowFlow.getReviewContent();
+		borrowFlow = (BorrowFlow) commonService.findById(BorrowFlow.class, borrowFlow.getId());
+		workService.dealte(borrowFlow,reviewContent,materials,op);
+		request.getRequestDispatcher("/WorkController/dealteBorrowList").forward(request, response);
+	}
+	
+	@RequestMapping("/dealteBack")
+	public void dealteBack(BorrowFlow borrowFlow,String materials,String badCode,String badContext,HttpServletRequest request,HttpServletResponse response,Model model) throws ServletException, IOException{
+		workService.dealteBack(borrowFlow.getId());
+		workService.bad(badCode,badContext);
+		request.getRequestDispatcher("/WorkController/dealteBackList").forward(request, response);
+	}
+	
+	@RequestMapping("/dealteBackList")
+	public String dealteBackList(Model model){
+		PageBean<BorrowFlow> pb = workService.findDealteBackList();
+		model.addAttribute("pageBean", pb);
+		return "/dealteWork/admin/dealteBack";
+	}
+	
+	@RequestMapping("/badMaterialDetailList")
+	public String badMaterialDetailList(PageBean<MaterialDetailBean> pb,Model model){
+		pb = workService.badMaterialDetailList(pb);
+		model.addAttribute("pageBean", pb);
+		return "/repair/badMaterialDetailList";
+	}
+	
+	@RequestMapping("/repairMaterial")
+	public void repairMaterial(MaterialDetailBean materialDetail,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		materialDetail = (MaterialDetailBean) commonService.findById(MaterialDetailBean.class, materialDetail.getId());
+		materialDetail.setStatus(MaterialStatus.NOMAL);
+		materialDetail.setBadContext("已维修");
+		commonService.merge(materialDetail);
+		MaterialDetailFlowBean materialDetailFlowBean = new MaterialDetailFlowBean();
+		materialDetailFlowBean.setOper((UserBean)request.getSession().getAttribute("user"));
+		materialDetailFlowBean.setOpMaterial(materialDetail);
+		materialDetailFlowBean.setOp(MaterialDetailOp.REPAIR);
+		materialDetailFlowBean.setBorrowFlow(null);
+		commonService.merge(materialDetailFlowBean);
+		request.getRequestDispatcher("/WorkController/badMaterialDetailList").forward(request, response);
 	}
 
 }

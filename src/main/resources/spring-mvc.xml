@@ -33,6 +33,8 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path="/home"/>
+			<mvc:exclude-mapping path="/indexNews"/>
+			<mvc:exclude-mapping path="/indexInstitution"/>
 			<bean class="edu.xawl.filter.LoginInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>

@@ -12,18 +12,15 @@
 	  <li class="layui-nav-item">
 	    <a class="" href="#">维修详细</a>
 	    <dl class="layui-nav-child">
-	      <dd><a href="${ctx}/WorkController/findNewsList" onclick="theforever(this);">最新消息维护</a></dd>
-	      <dd><a href="${ctx}/WorkController/findInstitutionList" onclick="theforever(this);">规章制度维护</a></dd>
-	      <dd><a href="${ctx}/WorkController/editIndexInfo" onclick="theforever(this);">热门器材维护</a></dd>
+	      <dd><a class="dh" hrefs="${ctx}/WorkController/badMaterialDetailList">损坏器材列表</a></dd>
 	    </dl>
 	  </li>
 	  
 	  <li class="layui-nav-item">
-		<a href="#">个人信息</a>
+		<a href="#">个人中心</a>
 		<dl class="layui-nav-child">
-	      <dd><a href="">移动模块</a></dd>
-	      <dd><a href="javascript:;">后台模版</a></dd>
-	      <dd><a href="">电商平台</a></dd>
+	      <dd><a class="dh" hrefs="${ctx}/MessageController/messageList">消息列表</a></dd>
+	      <dd><a class="dh" hrefs="${ctx}/UserController/personInfo">基本资料</a></dd>
 	    </dl>
 	  </li>
 	</ul>

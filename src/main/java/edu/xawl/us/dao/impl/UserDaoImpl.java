@@ -12,7 +12,10 @@ import org.springframework.stereotype.Repository;
 import edu.xawl.common.dao.BaseDao;
 import edu.xawl.common.entity.PageBean;
 import edu.xawl.material.entity.BorrowFlow;
+import edu.xawl.material.entity.MaterialBean;
+import edu.xawl.material.entity.MaterialDetailBean;
 import edu.xawl.material.enums.BorrowFlowStatus;
+import edu.xawl.material.enums.MaterialStatus;
 import edu.xawl.us.dao.UserDao;
 import edu.xawl.us.entity.UserBean;
 
@@ -31,7 +34,20 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public PageBean<BorrowFlow> findBorrowFlowWithStatus(UserBean currentUser,BorrowFlowStatus borrow) {
-		String hql = " from BorrowFlow bf where bf.borrower=? and bf.borrowStatus=? order by bf.createTime ";
-		return baseDao.findByPageQuery(new PageBean<BorrowFlow>(), hql , "BorrowFlow", currentUser,borrow);
+		String hql = " from BorrowFlow bf where bf.borrower=? and (bf.borrowStatus=? or bf.borrowStatus=?) order by bf.createTime ";
+		return baseDao.findByPageQuery(new PageBean<BorrowFlow>(), hql , "BorrowFlow", currentUser,borrow,BorrowFlowStatus.BACK);
+	}
+	
+	@Override
+	public PageBean<BorrowFlow> findOverTimeList(UserBean currentUser) {
+		String hql = " from BorrowFlow bf where bf.overTime=? order by bf.createTime ";
+		return baseDao.findByPageQuery(new PageBean<BorrowFlow>() , hql, "BorrowFlow", true);
+	}
+	
+	@Override
+	public List<MaterialDetailBean> findMaterialDetailByMaterialAndReviewStatus(
+			MaterialBean material) {
+		String hql = " from MaterialDetailBean md where md.material=? and md.status=? ";
+		return baseDao.findByHql(hql, material,MaterialStatus.REVIEW);
 	}
 }

@@ -1,6 +1,7 @@
 package edu.xawl.material.entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -9,6 +10,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import edu.xawl.common.entity.BaseBean;
@@ -43,6 +46,15 @@ public class BorrowFlow extends BaseBean{
 	private MaterialBean material;
 	
 	private Integer num;
+	
+	private boolean overTime;
+	
+	/**
+	 * 表示应该归还时间
+	 */
+	private Date goBackTime;
+	
+	private List<MaterialDetailFlowBean> details = new ArrayList<MaterialDetailFlowBean>();
 	
 	@ManyToOne(targetEntity=UserBean.class)
 	@JoinColumn(name="BORROWER")
@@ -119,5 +131,33 @@ public class BorrowFlow extends BaseBean{
 
 	public void setNum(Integer num) {
 		this.num = num;
+	}
+
+	@Column(name="OVER_TIME")
+	public boolean getOverTime() {
+		return overTime;
+	}
+
+	public void setOverTime(boolean overTime) {
+		this.overTime = overTime;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name="GO_BACK_TIME")
+	public Date getGoBackTime() {
+		return goBackTime;
+	}
+
+	public void setGoBackTime(Date goBackTime) {
+		this.goBackTime = goBackTime;
+	}
+
+	@Transient
+	public List<MaterialDetailFlowBean> getDetails() {
+		return details;
+	}
+
+	public void setDetails(List<MaterialDetailFlowBean> details) {
+		this.details = details;
 	}
 }

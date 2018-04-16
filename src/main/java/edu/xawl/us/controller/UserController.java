@@ -1,10 +1,12 @@
 package edu.xawl.us.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +23,6 @@ import edu.xawl.common.entity.PageBean;
 import edu.xawl.common.service.CommonService;
 import edu.xawl.common.utils.CronUtils;
 import edu.xawl.material.entity.BorrowFlow;
-import edu.xawl.material.entity.MaterialDetailBean;
 import edu.xawl.message.entity.MailContentBean;
 import edu.xawl.message.enums.MailContentType;
 import edu.xawl.quartz.service.QuartzService;
@@ -177,20 +178,51 @@ public class UserController {
 		UserBean currentUser = (UserBean) request.getSession().getAttribute("user");
 		PageBean<BorrowFlow> borrow = userService.findMyBorrow(currentUser);
 		model.addAttribute("pageBean", borrow);
-		return "/ordinary/myMark";
+		return "/ordinary/myBorrow";
+	}
+	
+	@RequestMapping("/cansMyBorrow")
+	public void cansMyBorrow(BorrowFlow borrowFlow,HttpServletRequest request,HttpServletResponse response,Model model) throws ServletException, IOException{
+		userService.cansMyBorrow(borrowFlow.getId());
+		request.getRequestDispatcher("/UserController/myBorrow").forward(request, response);
 	}
 	
 	//noBack
 	@RequestMapping("/noBack")
 	public String noBack(HttpServletRequest request,Model model){
-		
-		return "/ordinary/myMark";
+		UserBean currentUser = (UserBean)request.getSession().getAttribute("user");
+		PageBean<BorrowFlow> noBack = userService.findMyNoBack(currentUser);
+		model.addAttribute("pageBean",noBack);
+		return "/ordinary/noBack";
 	}
 	
-	//myFlow
-	@RequestMapping("/myFlow")
-	public String myFlow(HttpServletRequest request,Model model){
-		
-		return "/ordinary/myMark";
+	@RequestMapping("/back")
+	public void back(BorrowFlow borrowFlow,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		userService.back(borrowFlow);
+		request.getRequestDispatcher("/UserController/noBack").forward(request, response);
+	}
+	
+	@RequestMapping("/cansBack")
+	public void cansBack(BorrowFlow borrowFlow,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		userService.cansBack(borrowFlow);
+		request.getRequestDispatcher("/UserController/noBack").forward(request, response);
+	}
+	
+	//goBack
+	@RequestMapping("/goBack")
+	public String goBack(HttpServletRequest request,Model model){
+		UserBean currentUser = (UserBean)request.getSession().getAttribute("user");
+		PageBean<BorrowFlow> goBack = userService.findMyGoBack(currentUser);
+		model.addAttribute("pageBean",goBack);
+		return "/ordinary/goBack";
+	}
+	
+	//goBack
+	@RequestMapping("/overTimeList")
+	public String overTimeList(HttpServletRequest request,Model model){
+		UserBean currentUser = (UserBean)request.getSession().getAttribute("user");
+		PageBean<BorrowFlow> overTimeList = userService.findOverTimeList(currentUser);
+		model.addAttribute("pageBean",overTimeList);
+		return "/ordinary/overTimeList";
 	}
 }

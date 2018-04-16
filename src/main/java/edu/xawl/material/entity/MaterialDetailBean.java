@@ -27,6 +27,21 @@ public class MaterialDetailBean extends BaseBean{
 	 */
 	private MaterialStatus status;
 	
+	/**
+	 * 损坏说明
+	 */
+	private String badContext;
+	
+	/**
+	 * 损坏次数
+	 */
+	private Integer badNum;
+	
+	/**
+	 * 已经使用次数
+	 */
+	private Integer usedNum;
+	
 	
 	
 	public MaterialDetailBean() {
@@ -69,7 +84,31 @@ public class MaterialDetailBean extends BaseBean{
 	public void setMaterial(MaterialBean material) {
 		this.material = material;
 	}
-	
-	
 
+	@Column(name="BAD_CONTEXT")
+	public String getBadContext() {
+		return badContext;
+	}
+
+	public void setBadContext(String badContext) {
+		this.badContext = badContext;
+	}
+
+	@Column(name="BAD_NUM")
+	public Integer getBadNum() {
+		return badNum;
+	}
+
+	public void setBadNum(Integer badNum) {
+		this.badNum = badNum;
+	}
+
+	@Column(name="USED_NUM")
+	public Integer getUsedNum() {
+		return usedNum;
+	}
+
+	public void setUsedNum(Integer usedNum) {
+		this.usedNum = usedNum;
+	}
 }

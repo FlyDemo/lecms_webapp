@@ -23,6 +23,8 @@ public class MaterialDetailFlowBean extends BaseBean{
 	private MaterialDetailBean opMaterial;
 	
 	private MaterialDetailOp op;
+	
+	private BorrowFlow borrowFlow;
 
 	@ManyToOne(targetEntity=UserBean.class)
 	@JoinColumn(name="OPER")
@@ -53,4 +55,16 @@ public class MaterialDetailFlowBean extends BaseBean{
 	public void setOp(MaterialDetailOp op) {
 		this.op = op;
 	}
+
+	@ManyToOne(targetEntity=BorrowFlow.class)
+	@JoinColumn(name="BORROW_FLOW")
+	public BorrowFlow getBorrowFlow() {
+		return borrowFlow;
+	}
+
+	public void setBorrowFlow(BorrowFlow borrowFlow) {
+		this.borrowFlow = borrowFlow;
+	}
+	
+	
 }

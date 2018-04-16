@@ -78,12 +78,13 @@ $("document").ready(function(){
 				var materialCreator = $("#materialCreator").val();
 				var tip = $("#tip").val();
 				var total = $("#total").val();
+				var tipNum = $("#tipNum").val();
 				var deleted = false;
 				
 				$.ajax({
 					url:"/lecms_webapp/MaterialController/saveMaterial",
 					type:"POST",
-					data:{"op":op,"id":id,"materialImgPath":img,"materialDesc":materialDesc,"materialCategory.id":categoryCode,"materialName":materialName,"price":price,"materialRepairTime":materialRepairTime,"freeUseTime":freeUseTime,"materialCreator":materialCreator,"tip":tip,"deleted":deleted,"num":total},
+					data:{"op":op,"id":id,"materialImgPath":img,"materialDesc":materialDesc,"tipNum":tipNum,"materialCategory.id":categoryCode,"materialName":materialName,"price":price,"materialRepairTime":materialRepairTime,"freeUseTime":freeUseTime,"materialCreator":materialCreator,"tip":tip,"deleted":deleted,"num":total},
 					success:function(){
 						$(location).attr("href","/lecms_webapp/MaterialController/findMaterialDataByName");
 					}

@@ -57,7 +57,7 @@
 					</c:if>
 					<input type="hidden" name="imgSrc" id="imgSrc" value="${materialBean.materialImgPath}"/>
 					
-					<input id="img" name="img" type="file" class="required" name="materialImgPath" onchange="previewImage(this);" value="上传图片"/>
+					<input id="img" name="img" type="file" name="materialImgPath" onchange="previewImage(this);" value="上传图片"/>
 				</div>
 			</div>
 			
@@ -125,6 +125,13 @@
 				<label class="layui-form-label">器材总数量</label>
 				<div class="layui-input-block">
 					<input type="text" id="total" name="total" class="layui-input required digits" value="${materialBean.total}">
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label">预警数量</label>
+				<div class="layui-input-block">
+					<input type="text" id="tipNum" name="tipNum" class="layui-input required digits" value="${materialBean.tipNum}">
 				</div>
 			</div>
 			

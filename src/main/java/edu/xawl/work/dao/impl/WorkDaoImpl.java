@@ -9,7 +9,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
+import edu.xawl.common.dao.BaseDao;
 import edu.xawl.common.entity.PageBean;
+import edu.xawl.material.entity.BorrowFlow;
+import edu.xawl.material.enums.BorrowFlowStatus;
 import edu.xawl.work.dao.WorkDao;
 import edu.xawl.work.entity.NewsBean;
 
@@ -18,6 +21,9 @@ public class WorkDaoImpl implements WorkDao {
 	
 	@Resource
 	private SessionFactory sf;
+	
+	@Resource
+	private BaseDao baseDao;
 
 	public PageBean findNewsList(PageBean<NewsBean> pageBean) {
 		if(pageBean.getCurrentPage()==null||"0".equals(pageBean.getCurrentPage())) pageBean.setCurrentPage(1);
@@ -37,5 +43,12 @@ public class WorkDaoImpl implements WorkDao {
 		}
 		
 		return pageBean;
+	}
+	
+	
+	@Override
+	public PageBean<BorrowFlow> findBorrowFlowByStatus(BorrowFlowStatus borrow) {
+		String hql = " from BorrowFlow where borrowStatus=? ";
+		return baseDao.findByPageQuery(new PageBean<BorrowFlow>(), hql, "BorrowFlow", borrow);
 	}
 }

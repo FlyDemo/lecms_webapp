@@ -70,6 +70,17 @@ public class MaterialBean extends BaseBean{
 	 */
 	private Integer badNum;
 	
+	/**
+	 * 预警数量
+	 */
+	private Integer tipNum;
+	
+	/**
+	 * 理论使用次数
+	 * @return
+	 */
+	private Integer useNum;
+	
 	@Column(name="MATERIAL_NAME")
 	public String getMaterialName() {
 		return materialName;
@@ -187,6 +198,23 @@ public class MaterialBean extends BaseBean{
 		this.badNum = badNum;
 	}
 	
+	/**
+	 * 预警数量
+	 * @return
+	 */
+	@Column(name="TIP_NUM")
+	public Integer getTipNum() {
+		return tipNum;
+	}
+	public void setTipNum(Integer tipNum) {
+		this.tipNum = tipNum;
+	}
 	
-	
+	@Column(name="USE_NAME")
+	public Integer getUseNum() {
+		return useNum;
+	}
+	public void setUseNum(Integer useNum) {
+		this.useNum = useNum;
+	}
 }

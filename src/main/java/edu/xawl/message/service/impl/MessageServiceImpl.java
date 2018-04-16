@@ -33,12 +33,13 @@ public class MessageServiceImpl implements MessageService {
 		String toMail = toUser.getMail();
 		
 		//调用消息接口发送消息
+		UserBean from = (UserBean)commonService.findByHql(" from UserBean u where u.loginName = ? ", "admin").get(0);
+		MessageBean messageBean = new MessageBean(from, toUser, mailContent.getContent(), MessageState.NO_READ, false, false);
+		commonService.merge(messageBean);
+		
 		if(null==toMail||"".equals(toMail)||mailContent.getContent()==null||"".equals(mailContent.getContent())){
 			System.out.println("===============邮件发送失败！=======================");
 		}else{
-			UserBean from = (UserBean)commonService.findByHql(" from UserBean u where u.loginName = ? ", "admin").get(0);
-			MessageBean messageBean = new MessageBean(from, toUser, mailContent.getContent(), MessageState.NO_READ, false, false);
-			commonService.merge(messageBean);
 			MailUtils.sendEmailFromAdmin("用户激活成功提示！", mailContent.getContent(), toMail);
 		}
 	}

@@ -1,6 +1,14 @@
 $("document").ready(function(){
-	
 	listPageData("/lecms_webapp/UserController/myBorrow");
+	
+	//绑定取消申请按钮
+	$("tr").find("a#deleteBtn").on("click",function(){
+		var con = confirm("是否确定取消此申请？");
+		if(confirm){
+			var flowId = $(this).parents("tr.borrowFlowListTr").attr("id");
+			$(location).attr("href","/lecms_webapp/UserController/cansMyBorrow?id="+flowId);
+		}
+	});
 	
 });
 //获取列表分页数据  刷新页面

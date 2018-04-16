@@ -56,7 +56,7 @@ public class BaseDaoImpl implements BaseDao{
 		return query.list();
 	}
 
-	public <T> List<T> find(Class clazz,String seri) {
+	public <T> Object find(Class clazz,String seri) {
 		Session session = sessionFactory.getCurrentSession();
 		return (List<T>) session.load(clazz, seri);
 		

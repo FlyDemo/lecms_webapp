@@ -94,7 +94,7 @@ function  clickto(){
 }
 </script>
 
-<script src="${ctx}/js/ordinary/myMark.js"></script>
+<script src="${ctx}/js/ordinary/myBorrow.js"></script>
 
 </head>
 
@@ -125,11 +125,11 @@ function  clickto(){
       <tr>
       	<td width="5%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">器材图片</span></div></td>
         <td width="20%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">器材名称</span></div></td>
-        <td width="10%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">申请数量</span></div></td>
+        <td width="5%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">申请数量</span></div></td>
         <td width="25%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">申请理由</span></div></td>
-        <td width="20%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">当前处理人</span></div></td>
+        <td width="10%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">当前处理人</span></div></td>
         <td width="20%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">申请时间</span></div></td>
-        <!-- <td width="25%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">基本操作</span></div></td> -->
+        <td width="25%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">基本操作</span></div></td>
       </tr>
       <c:forEach var="borrowFlow" items="${pageBean.rowDatas}">
 	      <tr  id="${borrowFlow.id}" class="borrowFlowListTr">
@@ -139,7 +139,7 @@ function  clickto(){
 	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"<div align="center">${borrowFlow.borrowContent}</div></td>
 	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"<div align="center">${borrowFlow.currentPeople.name}</div></td>
 	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"<div align="center">${borrowFlow.createTime}</div></td>
-	        <!-- <td height="20" bgcolor="#FFFFFF"><div align="center" class="STYLE21"><a id="viewBtn" href="#">查看</a> | <a id="deleteBtn" href="#">删除</a></div></td> -->
+	        <td height="20" bgcolor="#FFFFFF"><div align="center" class="STYLE21"><a id="deleteBtn" href="#">取消申请</a></div></td>
 	      </tr>
       </c:forEach>
     </table></td>

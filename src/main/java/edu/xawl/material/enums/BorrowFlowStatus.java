@@ -17,5 +17,17 @@ public enum BorrowFlowStatus {
 	/**
 	 * no
 	 */
-	REFUSAL
+	REFUSAL,
+	/**
+	 * 	go back
+	 */
+	BACK,
+	/**
+	 * 
+	 */
+	BACKED,
+	/**
+	 * USER CANSOLE
+	 */
+	DELETED
 }

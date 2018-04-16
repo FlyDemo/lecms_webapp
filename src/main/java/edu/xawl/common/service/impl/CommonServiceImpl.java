@@ -39,7 +39,7 @@ public class CommonServiceImpl implements CommonService{
 	}
 
 	public <T> Object findById(Class<T> clazz, String serilaz) {
-		return sessionFactory.getCurrentSession().load(clazz, serilaz);
+		return sessionFactory.getCurrentSession().get(clazz, serilaz);
 	}
 	
 	public <T> List<T> findByHql(String hql, Object... args) {

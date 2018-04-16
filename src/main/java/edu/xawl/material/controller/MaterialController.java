@@ -48,7 +48,7 @@ public class MaterialController {
 	public String findMaterialDataByName(PageBean<MaterialBean> pb,Model model){
 		pb = materialService.findMaterialDataByCode(pb);
 		model.addAttribute("pageBean", pb);
-		return "/ordinary/materialList";
+		return "/category/materialList";
 	}
 	
 	

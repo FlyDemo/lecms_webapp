@@ -128,7 +128,7 @@ function  clickto(){
       </tr>
       <c:forEach var="InstitutionBean" items="${pageBean.rowDatas}">
 	      <tr  id="${InstitutionBean.id}" class="InstitutionDataListTr">
-	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center"><span class="STYLE19">${InstitutionBean.name}</span></div></td>
+	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center"><span title="${InstitutionBean.name}" class="STYLE19">${InstitutionBean.name.length()>15?InstitutionBean.name.substring(0,15):InstitutionBean.name}<c:if test="${InstitutionBean.name.length()>15}">..</c:if></span></div></td>
 	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">${InstitutionBean.createTime}</div></td>
 	        <td height="20" bgcolor="#FFFFFF"><div align="center" class="STYLE21"><a href="${ctx}/WorkController/editInstitutionPage?id=${InstitutionBean.id}&op=view">查看</a> |<a href="${ctx}/WorkController/editInstitutionPage?id=${InstitutionBean.id}&op=edit"> 编辑</a>|<a id="deleteBtn" href="#"> 删除</a></div></td>
 	      </tr>

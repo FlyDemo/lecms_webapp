@@ -35,7 +35,7 @@ public interface BaseDao {
 	 * @param seri
 	 * @return
 	 */
-	public <T> List<T> find(Class clazz,String seri);
+	public <T> Object find(Class clazz,String seri);
 	
 	/**
 	 * 查询分页数据
