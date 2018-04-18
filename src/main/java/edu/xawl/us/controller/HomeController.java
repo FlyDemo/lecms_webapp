@@ -2,17 +2,19 @@ package edu.xawl.us.controller;
 
 import java.util.List;
 
+
+
 import javax.annotation.Resource;
 
-import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
+
 import edu.xawl.common.service.CommonService;
 import edu.xawl.material.entity.MaterialBean;
-import edu.xawl.material.entity.MaterialDetailBean;
 import edu.xawl.material.enums.MaterialStatus;
 import edu.xawl.work.entity.InstitutionBean;
 import edu.xawl.work.entity.NewsBean;
