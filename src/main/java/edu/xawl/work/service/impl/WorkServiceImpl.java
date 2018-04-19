@@ -164,4 +164,18 @@ public class WorkServiceImpl implements WorkService {
 		PageBean<MaterialDetailBean> findByPageQuery = commonService.findByPageQuery(pb, hql, "MaterialDetailBean", MaterialStatus.BAD);
 		return findByPageQuery;
 	}
+	
+	@Override
+	public boolean materialValid(String code,String materialId) {
+		MaterialBean material = (MaterialBean) commonService.findById(MaterialBean.class, materialId);
+		String hql = " from MaterialDetailBean mdb where mdb.materialCode=? and mdb.material=? ";
+		List<MaterialDetailBean> materialDetails = commonService.findByHql(hql, code,material);
+		if(materialDetails.size()>0){
+			MaterialDetailBean materialDetailBean = materialDetails.get(0);
+			if(materialDetailBean.getStatus().equals(MaterialStatus.NOMAL)||materialDetailBean.getStatus().equals(MaterialStatus.REVIEW)){
+				return true;
+			}
+		}
+		return false;
+	}
 }

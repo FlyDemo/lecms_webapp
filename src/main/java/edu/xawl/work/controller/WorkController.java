@@ -221,5 +221,12 @@ public class WorkController {
 		commonService.merge(materialDetailFlowBean);
 		request.getRequestDispatcher("/WorkController/badMaterialDetailList").forward(request, response);
 	}
+	
+	@ResponseBody
+	@RequestMapping("/materialValid")
+	public String materialValid(MaterialDetailBean mb,String materialId){
+		boolean isValid = workService.materialValid(mb.getMaterialCode(),materialId);
+		return String.valueOf(isValid);
+	}
 
 }

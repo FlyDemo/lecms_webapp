@@ -41,7 +41,8 @@
 </head>
 <body>
 	<form class="layui-form dealteForm" action="#" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="flowId" id="flowId" value="${borrow.id}"
+		<input type="hidden" name="flowId" id="flowId" value="${borrow.id}">
+		<input type="hidden" name="materialId" id="materialId" value="${borrow.material.id}">
 		<div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">器材图片</label>

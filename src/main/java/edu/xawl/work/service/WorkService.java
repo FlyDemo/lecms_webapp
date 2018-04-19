@@ -19,6 +19,7 @@ public interface WorkService {
 
 	public void bad(String badCode, String badContext);
 
-	public PageBean<MaterialDetailBean> badMaterialDetailList(
-			PageBean<MaterialDetailBean> pb);
+	public PageBean<MaterialDetailBean> badMaterialDetailList(PageBean<MaterialDetailBean> pb);
+
+	public boolean materialValid(String id, String materialId);
 }
