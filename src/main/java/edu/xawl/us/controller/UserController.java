@@ -129,6 +129,9 @@ public class UserController {
 			userBean.setName(userForm.getName());
 			userBean.setMail(userForm.getMail());
 		}else{
+			if(userBean==null){
+				userBean = userForm;
+			}
 			userBean.setPassWord(DigestUtils.md5DigestAsHex(userForm.getPassWord().trim().getBytes()));
 		}
 		commonService.merge(userBean);
