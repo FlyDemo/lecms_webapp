@@ -40,8 +40,8 @@ public class UserDaoImpl implements UserDao {
 	
 	@Override
 	public PageBean<BorrowFlow> findOverTimeList(UserBean currentUser) {
-		String hql = " from BorrowFlow bf where bf.overTime=? order by bf.createTime ";
-		return baseDao.findByPageQuery(new PageBean<BorrowFlow>() , hql, "BorrowFlow", true);
+		String hql = " from BorrowFlow bf where bf.overTime=? and bf.borrower=? order by bf.createTime ";
+		return baseDao.findByPageQuery(new PageBean<BorrowFlow>() , hql, "BorrowFlow", true,currentUser);
 	}
 	
 	@Override
