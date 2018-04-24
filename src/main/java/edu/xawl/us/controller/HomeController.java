@@ -96,4 +96,10 @@ public class HomeController {
 		obj.put("used", materialDetails.get(0));
 		return obj.toString();
 	}
+	
+	
+	@RequestMapping("/noDataList")
+	public String noDataList(){
+		return "/200";
+	}
 }

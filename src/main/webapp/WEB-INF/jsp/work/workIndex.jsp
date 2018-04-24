@@ -42,10 +42,6 @@ layui.use('element', function(){
   
 });
 
-$("a.list1").Click  = function(){
-	alert("a");
-}
-
 </script>
 </body>
 </html>

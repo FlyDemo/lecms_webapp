@@ -99,6 +99,7 @@ function  clickto(){
 </head>
 
 <body>
+<input type="hidden" name="role" id="role" value="${role}"/>
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
     <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -107,12 +108,12 @@ function  clickto(){
           <tr>
             <td><table width="100%" cellspacing="0" cellpadding="0">
               <tr>
-                <td width="94%" align="center"><span>普通会员信息 </span></td>
+                <td width="94%" align="center"><span><c:if test="${role eq 'ORDINARY'}">普通会员信息</c:if><c:if test="${role eq 'REPAIR_MAN'}">维修人员信息</c:if> </span></td>
               </tr>
             </table></td>
             <td><div align="right">
               <span>
-	              <img src="${ctx}/images/add.gif" width="10" height="10" /> <a href="${ctx}/UserController/editUser?op=create" style="text-decoration:none;">添加</a>  &nbsp;&nbsp;&nbsp;
+	              <img src="${ctx}/images/add.gif" width="10" height="10" /> <a href="${ctx}/UserController/editUser?op=create&leval=${role}" style="text-decoration:none;">添加</a>  &nbsp;&nbsp;&nbsp;
               </span></div></td>
           </tr>
         </table></td>

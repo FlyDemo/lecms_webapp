@@ -6,12 +6,12 @@
 <head>
 
 <style>
-#noData{
-	color:red;
-	font-family:'宋体';
-	font-size:20px;
-	text-align:center;
-	margin:20% auto;
+body{
+	background:url('${ctx}/images/right_log.jpg');
+	width:100%;
+	height:100%;
+	background-size: cover;
+	background-repeat: no-repeat;
 }
 
 </style>
@@ -20,8 +20,5 @@
 
 
 <body>
-	<div id="noData">
-		暂无数据
-	</div>
 </body>
 </html>

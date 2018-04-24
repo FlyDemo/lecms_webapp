@@ -24,6 +24,7 @@ a.myCard {
 }
 
 .myCard img {
+  float:bottom;
   position: absolute;
   z-index: 999;
   top: -135px;
@@ -42,10 +43,12 @@ a.myCard {
 
 }
 
+
+/* 因为样式冲突，暂且隐藏掉
 .myCard:hover img {
     transform: scale(1);
     opacity: 1;
-}
+} */
 </style>
 
 <body>
@@ -54,9 +57,8 @@ a.myCard {
 	    <!-- 底部固定区域 -->
 	    © <a href="${ctx}/home" target="_parent">朝阳实验室</a>	<br>
 	    © <a href="http://www.xawl.org/" target="_black">西安文理学院</a> 2018届毕业生
-	    
 	    <a class="social myCard" href="https://oneseekers.github.io/Blog/"  target="_black">【刘宏飞】 
-			<img class="qrcode" src="${ctx}/images/myCard.jpg" alt="我的二维码">
+	    	<img class="qrcode" src="${ctx}/images/myCard.jpg" alt="我的二维码">
 		</a>毕业设计  版权仅归开发者所有 ，没有允许，请勿使用
     </div>
 </body>

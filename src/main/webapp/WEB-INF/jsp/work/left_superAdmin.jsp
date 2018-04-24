@@ -27,7 +27,7 @@
 	  </li>
 	  
 	  <li class="layui-nav-item">
-		<a href="#">人员管理</a>
+		<a class="">人员管理</a>
 		<dl class="layui-nav-child">
 	      <dd><a class="dh" hrefs="${ctx}/UserController/UserList?role=ORDINARY">普通会员管理</a></dd>
 	      <dd><a class="dh" hrefs="${ctx}/UserController/UserList?role=REPAIR_MAN">维修人员管理</a></dd>
@@ -35,7 +35,7 @@
 	  </li>
 	  
 	 <li class="layui-nav-item">
-		<a href="#">器材管理</a>
+		<a class="">器材管理</a>
 		<dl class="layui-nav-child">
 	      <dd><a class="dh" hrefs="${ctx}/MaterialCategoryController/findMaterialCategoryData">器材分类管理</a></dd>
 	      <dd><a class="dh" hrefs="${ctx}/MaterialController/findMaterialDataByName">器材管理</a></dd>
@@ -43,7 +43,7 @@
 	  </li>
 	 
 	  <li class="layui-nav-item">
-		<a href="#">个人中心</a>
+		<a class="">个人中心</a>
 		<dl class="layui-nav-child">
 	      <dd><a class="dh" hrefs="${ctx}/MessageController/messageList">消息列表</a></dd>
 	      <dd><a class="dh" hrefs="${ctx}/UserController/personInfo">基本资料</a></dd>

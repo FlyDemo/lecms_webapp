@@ -137,7 +137,8 @@ function  clickto(){
 	        	 <c:if test="${materialDetailBean.status eq 'NOMAL'}">可借用</c:if>
 	        	 <c:if test="${materialDetailBean.status eq 'USED'}">已借出</c:if>
 	        	 <c:if test="${materialDetailBean.status eq 'BAD'}">已损坏</c:if>
-	        	 <c:if test="${materialDetailBean.status eq 'DELETED'}">已删除</c:if>  
+	        	 <c:if test="${materialDetailBean.status eq 'DELETED'}">已删除</c:if>
+	        	 <c:if test="${materialDetailBean.status eq 'REVIEW'}">已被预约</c:if>  
 	        </div></td>
 	        <td height="20" bgcolor="#FFFFFF"><div align="center" class="STYLE21"><a id="viewBtn" href="#">查看</a> | <a id="deleteBtn" href="#">删除</a></div></td>
 	      </tr>

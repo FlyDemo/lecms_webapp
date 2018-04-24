@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import edu.xawl.common.dao.BaseDao;
 import edu.xawl.common.entity.PageBean;
 import edu.xawl.common.service.CommonService;
+import edu.xawl.common.utils.MailUtils;
 import edu.xawl.material.entity.BorrowFlow;
 import edu.xawl.material.entity.MaterialBean;
 import edu.xawl.material.entity.MaterialDetailBean;
@@ -17,6 +18,10 @@ import edu.xawl.material.entity.MaterialDetailFlowBean;
 import edu.xawl.material.enums.BorrowFlowStatus;
 import edu.xawl.material.enums.MaterialDetailOp;
 import edu.xawl.material.enums.MaterialStatus;
+import edu.xawl.message.entity.MessageBean;
+import edu.xawl.message.enums.MessageState;
+import edu.xawl.us.entity.UserBean;
+import edu.xawl.us.enums.UserLeval;
 import edu.xawl.work.dao.WorkDao;
 import edu.xawl.work.entity.NewsBean;
 import edu.xawl.work.service.WorkService;
@@ -141,19 +146,30 @@ public class WorkServiceImpl implements WorkService {
 	public void bad(String badCode,String badContext) {
 		String[] split = badCode.split(",");
 		String[] split2 = badContext.split(",");
-		if(split.length>1){
-			for (int i = 1; i < split.length; i++) {
+		if(split.length>0){
+			for (int i = 0; i < split.length; i++) {
 				String hql = " from MaterialDetailBean md where md.materialCode=? ";
 				List<MaterialDetailBean> findByHql = commonService.findByHql(hql, split[i]);
 				MaterialDetailBean m = findByHql.get(0);
 				m.setStatus(MaterialStatus.BAD);
-				m.setBadContext(split2[i-1]);
+				m.setBadContext(split2.length>=i+1?split2[i]:"");
 				if(m.getBadNum()==null||"".equals(m.getBadNum())){
 					m.setBadNum(1);
 				}else{
 					m.setBadNum(m.getBadNum()+1);
 				} 
 				commonService.merge(m);
+				
+				//	发送消息
+				List<UserBean> ads = commonService.findByHql(" from UserBean u where u.leval=? and u.deleted=? ", UserLeval.SUPER_ADMIN,false);
+				List<UserBean> reps = commonService.findByHql(" from UserBean u where u.leval=? and u.deleted=? ", UserLeval.REPAIR_MAN,false);
+				if(ads.size()>0&&reps.size()>0){
+					for (UserBean userBean : reps) {
+						MessageBean message = new MessageBean(ads.get(0), userBean, "器材损坏通知："+m.getMaterial().getMaterialName()+"损坏，请及时维修！", MessageState.NO_READ, false, false);
+						commonService.merge(message);
+						MailUtils.sendEmailFromAdmin("器材损坏通知", "朝阳实验室"+m.getMaterial().getMaterialName()+"已经损坏，请及时维修！", userBean.getMail());
+					}
+				}
 			}
 		}
 	}
@@ -172,7 +188,7 @@ public class WorkServiceImpl implements WorkService {
 		List<MaterialDetailBean> materialDetails = commonService.findByHql(hql, code,material);
 		if(materialDetails.size()>0){
 			MaterialDetailBean materialDetailBean = materialDetails.get(0);
-			if(materialDetailBean.getStatus().equals(MaterialStatus.NOMAL)||materialDetailBean.getStatus().equals(MaterialStatus.REVIEW)){
+			if(!materialDetailBean.getStatus().equals(MaterialStatus.DELETED)){
 				return true;
 			}
 		}

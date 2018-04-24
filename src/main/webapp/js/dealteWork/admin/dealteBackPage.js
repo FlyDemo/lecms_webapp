@@ -6,10 +6,15 @@ $("document").ready(function(){
 	$("textarea").attr("readonly","readonly").addClass("readonly").css("background-color","C1C1C1");
 	
 	//损坏数量可编辑
-	$("#badNum").removeAttr("readonly").css("background-color","white");
+	$("#sbadNum").removeAttr("readonly").css("background-color","white");
 	
-	$("#badNum").on("change",function(){
+	$("#sbadNum").on("change",function(){
 		var num = $(this).val();
+		var snum = $("#num").val();
+		if(num>snum){
+			$(this).attr("placeholder","损坏数量不得大于归还数量！").val("").focus();
+			return;
+		}
 		var $ap = $("#apen");
 		if(num>=0){
 			//先把上一次添加的移除，然后再添加
@@ -27,7 +32,40 @@ $("document").ready(function(){
 				$ap.append(body);	
 			}
 		}
+		
+		$("input[id^='badNum']").each(function(){
+			$(this).on("change",function(){
+				var materialDetails = "";
+				$("input[id^='badNum']").each(function(){
+					materialDetails = materialDetails+"|"+$(this).val();
+				});
+				/**
+				 * 获取器材编号，看后台是否存在，如果存在且状态正确，允许确认，其他情况，不予许
+				 */
+				var $thisMaterial = $(this);
+				var materialCode = $thisMaterial.val();
+				if(materialDetails.indexOf(materialCode)!=materialDetails.lastIndexOf(materialCode)){
+					$thisMaterial.attr("placeholder","编号:"+materialCode+"重复！").val("").focus();
+					return ;
+				}
+				var materialId = $("#materialId").val();
+				console.info("====materianId"+materialId);
+				$.ajax({
+					url:"/lecms_webapp/WorkController/materialValid",
+					type:"POST",
+					data:{"materialCode":materialCode,"materialId":materialId},
+					success:function(data){
+						if(eval(data)=='false'){
+							$thisMaterial.attr("placeholder","编号:"+materialCode+"无效！如有疑问，请联系系统管理员。").val("").focus();
+						}else{
+							materialDetails = materialDetails+materialCode+"|";
+						}
+					}
+				});
+			});
+		});
 	});
+	
 	
 	//保存
 	$("#sub").on("click",function(){

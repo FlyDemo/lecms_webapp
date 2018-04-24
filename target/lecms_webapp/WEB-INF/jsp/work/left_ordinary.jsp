@@ -9,30 +9,32 @@
 </head>
 <body>
 	<ul class="layui-nav layui-nav-tree"  lay-filter="test" style="height:100%">
+	  
+	  <li class="layui-nav-item">
+	    <a class="" href="#">个人记录</a>
+	    <dl class="layui-nav-child">
+	      <dd><a class="dh" hrefs="${ctx}/UserController/myBorrow">我的申请</a></dd>
+		  <dd><a class="dh" hrefs="${ctx}/UserController/noBack">未还器材</a></dd>
+	      <dd><a class="dh" hrefs="${ctx}/UserController/goBack">已还器材</a></dd>
+	      <dd><a class="dh" hrefs="${ctx}/UserController/overTimeList">逾期记录</a></dd>
+	    </dl>
+	  </li>
+	  
+	  
 	  <li class="layui-nav-item">
 	    <a class="" href="#">查看器材</a>
 	    <dl class="layui-nav-child">
-	      <dd><a href="${ctx}/WorkController/findNewsList" target="main">最新消息维护</a></dd>
-	      <dd><a href="${ctx}/WorkController/findInstitutionList" target="main">规章制度维护</a></dd>
-	      <dd><a href="${ctx}/WorkController/editIndexInfo" target="main">热门器材维护</a></dd>
+	      <c:forEach var="materialCategory" items="${applicationScope.materialCategory}">
+	      	<dd><a class="dh" hrefs="${ctx}/MaterialController/findMaterialDataByCategory?categoryId=${materialCategory.id}">${materialCategory.categoryName}</a></dd>
+	      </c:forEach>
 	    </dl>
 	  </li>
 	  
 	  <li class="layui-nav-item">
-		<a href="#">器材借还</a>
+		<a href="#">个人中心</a>
 		<dl class="layui-nav-child">
-	      <dd><a href="">移动模块</a></dd>
-	      <dd><a href="javascript:;">后台模版</a></dd>
-	      <dd><a href="">电商平台</a></dd>
-	    </dl>
-	  </li>
-	  
-	  <li class="layui-nav-item">
-		<a href="#">个人资料</a>
-		<dl class="layui-nav-child">
-	      <dd><a href="">移动模块</a></dd>
-	      <dd><a href="javascript:;">后台模版</a></dd>
-	      <dd><a href="">电商平台</a></dd>
+	      <dd><a class="dh" hrefs="${ctx}/MessageController/messageList">消息列表</a></dd>
+	      <dd><a class="dh" hrefs="${ctx}/UserController/personInfo">基本资料</a></dd>
 	    </dl>
 	  </li>
 	</ul>

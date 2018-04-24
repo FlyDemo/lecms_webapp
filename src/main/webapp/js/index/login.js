@@ -1,4 +1,10 @@
 $(document).ready(function(){
+	
+	$("body").keydown(function() {
+        if (event.keyCode == "13") {//keyCode=13是回车键
+            sub();
+        }
+    });
 	/**
 	 * 重置按钮
 	 */
@@ -20,7 +26,7 @@ function sub(){
 				if(data=="true"){
 					var referrerLink = document.referrer;
 					if(!$.trim(referrerLink)==''){
-						if(referrerLink.indexOf("/lecms_webapp")!='-1'){
+						if(referrerLink.indexOf("/lecms_webapp")!='-1'&&referrerLink.indexOf("/userExit")!='-1'){
 							her = referrerLink;
 						}
 					}

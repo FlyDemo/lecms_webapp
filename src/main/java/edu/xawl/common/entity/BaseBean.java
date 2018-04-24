@@ -5,7 +5,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
@@ -33,7 +32,7 @@ public class BaseBean implements Serializable{
 		this.id = id;
 	}
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	@Column(name="CREATE_TIME",updatable=false)
 	public Date getCreateTime() {
 		return createTime;
@@ -42,7 +41,7 @@ public class BaseBean implements Serializable{
 		this.createTime = createTime;
 	}
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	@Column(name = "MODIFY_TIME")
 	public Date getModifyTime() {
 		return modifyTime;

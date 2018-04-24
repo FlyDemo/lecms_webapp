@@ -19,7 +19,7 @@ $("document").ready(function(){
 				 */
 				var $thisMaterial = $(this);
 				var materialCode = $thisMaterial.val();
-				if(materialDetails.replace(materialDetails.substring(materialDetails.indexOf(materialCode),materialCode.length+1),"").indexOf(materialCode)!=-1){
+				if(materialDetails.indexOf(materialCode)!=materialDetails.lastIndexOf(materialCode)){
 					$thisMaterial.attr("placeholder","编号:"+materialCode+"重复！").val("").focus();
 					return ;
 				}

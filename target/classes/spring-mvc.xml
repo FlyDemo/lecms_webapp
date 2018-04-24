@@ -28,13 +28,35 @@
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 	
+	<!-- 权限拦截 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path="/home"/>
+			<mvc:exclude-mapping path="/indexNews"/>
+			<mvc:exclude-mapping path="/indexInstitution"/>
+			<mvc:exclude-mapping path="/indexConsume"/>
 			<bean class="edu.xawl.filter.LoginInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
+
+	<!-- 配置多媒体文件解析器 -->
+	<!-- 文件上传 -->
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="uploadTempDir" value="/upload/" />  <!-- 临时目录 -->
+        <property name="maxUploadSize" value="5242880"/><!-- 大小5M -->
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="resolveLazily" value="false"/>
+	</bean>
+	
+	<!-- <bean id="multipartResolver"
+	    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	    设置上传文件的最大尺寸为5MB
+	    <property name="maxUploadSize">
+	        <value>5242880</value>
+	    </property>
+	</bean> -->
 
 	<!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 -->
 	<bean

@@ -9,12 +9,20 @@
 </head>
 <body>
 	<ul class="layui-nav layui-nav-tree"  lay-filter="test" style="height:100%">
+	
+	 <li class="layui-nav-item">
+	    <a class="">我的待办</a>
+	    <dl class="layui-nav-child">
+	      <dd><a class="dh" hrefs="${ctx}/WorkController/dealteBorrowList">申请待办</a></dd>
+	      <dd><a class="dh" hrefs="${ctx}/WorkController/dealteBackList">归还待办</a></dd>
+	    </dl>
+	  </li>
+	
 	  <li class="layui-nav-item">
 	    <a class="">首页信息维护</a>
 	    <dl class="layui-nav-child">
 	      <dd><a class="dh" hrefs="${ctx}/WorkController/findNewsList">最新消息维护</a></dd>
 	      <dd><a class="dh" hrefs="${ctx}/WorkController/findInstitutionList">规章制度维护</a></dd>
-	      <dd><a class="dh" hrefs="${ctx}/WorkController/editIndexInfo">热门器材维护</a></dd>
 	    </dl>
 	  </li>
 	  
@@ -29,18 +37,16 @@
 	 <li class="layui-nav-item">
 		<a href="#">器材管理</a>
 		<dl class="layui-nav-child">
-	      <dd><a href="">移动模块</a></dd>
-	      <dd><a href="javascript:;">后台模版</a></dd>
-	      <dd><a href="">电商平台</a></dd>
+	      <dd><a class="dh" hrefs="${ctx}/MaterialCategoryController/findMaterialCategoryData">器材分类管理</a></dd>
+	      <dd><a class="dh" hrefs="${ctx}/MaterialController/findMaterialDataByName">器材管理</a></dd>
 	    </dl>
 	  </li>
-	  
+	 
 	  <li class="layui-nav-item">
 		<a href="#">个人中心</a>
 		<dl class="layui-nav-child">
-	      <dd><a href="">移动模块</a></dd>
-	      <dd><a href="javascript:;">后台模版</a></dd>
-	      <dd><a href="">电商平台</a></dd>
+	      <dd><a class="dh" hrefs="${ctx}/MessageController/messageList">消息列表</a></dd>
+	      <dd><a class="dh" hrefs="${ctx}/UserController/personInfo">基本资料</a></dd>
 	    </dl>
 	  </li>
 	</ul>

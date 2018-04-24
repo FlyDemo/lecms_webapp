@@ -30,23 +30,48 @@ import edu.xawl.us.entity.UserBean;
 @Entity
 @Table(name="LECMS_BORROW_FLOW")
 public class BorrowFlow extends BaseBean{
-	
+	/**
+	 * 申请人
+	 */
 	private UserBean borrower;
 	
+	/**
+	 * 审批人
+	 */
 	private UserBean reviewer;
 	
+	/**
+	 * 申请意见
+	 */
 	private String borrowContent;
 	
+	/**
+	 * 审批意见
+	 */
 	private String reviewContent;
 	
+	/**
+	 * 当前处理人
+	 */
 	private UserBean currentPeople;
 	
+	/**
+	 * 借还状态
+	 */
 	private BorrowFlowStatus borrowStatus;
 
+	/**
+	 * 申请器材
+	 */
 	private MaterialBean material;
-	
+	/**
+	 * 申请数量
+	 */
 	private Integer num;
 	
+	/**
+	 * 是否逾期
+	 */
 	private boolean overTime;
 	
 	/**

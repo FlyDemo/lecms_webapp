@@ -99,6 +99,9 @@ function  clickto(){
 </head>
 
 <body>
+<c:if test="${pageBean.rowDatas.size()<1}">
+    <c:redirect url="/noDataList"></c:redirect>
+</c:if>
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
     <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -127,8 +130,9 @@ function  clickto(){
         <td width="20%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">器材名称</span></div></td>
         <td width="10%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">数量</span></div></td>
         <td width="25%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">申请理由</span></div></td>
-        <td width="20%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">处理人</span></div></td>
-        <td width="20%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">归还时间</span></div></td>
+        <td width="10%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">应该归还时间</span></div></td>
+        <td width="10%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">实际归还时间</span></div></td>
+        <td width="10%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">是否逾期</span></div></td>
         <!-- <td width="25%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">基本操作</span></div></td> -->
       </tr>
       <c:forEach var="borrowFlow" items="${pageBean.rowDatas}">
@@ -137,8 +141,9 @@ function  clickto(){
 	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"<div align="center">${borrowFlow.material.materialName}</div></td>
 	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"<div align="center">${borrowFlow.num}</div></td>
 	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"<div align="center">${borrowFlow.borrowContent}</div></td>
-	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"<div align="center">${borrowFlow.currentPeople.name}</div></td>
+	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"<div align="center">${borrowFlow.goBackTime}</div></td>
 	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"<div align="center">${borrowFlow.modifyTime}</div></td>
+	        <td height="20" bgcolor="#FFFFFF" class="STYLE19"<div align="center">${borrowFlow.overTime=='true'?'是':'否'}</div></td>
 	        <!-- <td height="20" bgcolor="#FFFFFF"><div align="center" class="STYLE21"><a id="viewBtn" href="#">查看</a> | <a id="deleteBtn" href="#">删除</a></div></td> -->
 	      </tr>
       </c:forEach>

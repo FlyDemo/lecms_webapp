@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<title>朝阳实验室器材消耗管理系统</title>
+<title>朝阳实验室实验耗材使用管理系统</title>
 <link href="${ctx}/css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${ctx}/js/mobjs/jquery.js"></script>
 <script type="text/javascript" src="${ctx}/js/mobjs/jsapi.js"></script>
@@ -118,7 +118,7 @@
     
     
     <div class="inforight">
-    <div class="listtitle"><a href="#" class="more1"></a>热门器材</div>
+    <div class="listtitle"><a href="#" class="more1"></a>最新器材</div>
     
     <ul class="tooli">
     	<c:forEach var="materialBean" items="${material}">

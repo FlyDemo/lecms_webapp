@@ -84,12 +84,48 @@
 	</tx:advice>
 	
 	<!-- Quartz -->
+	
+	<!-- ======================== 调度触发器 ======================== -->  
+	<bean id="CronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+	    <property name="jobDetail" ref="OverTimeJob"></property>  
+	    <property name="cronExpression" value="0 0 1 * * ?"></property>  
+	</bean>
+	
+	<!-- 具体任务 -->
+	<bean id="OverTimeJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">    
+	     <property name="name" value="OverTimeJob"></property>    
+	     <property name="jobClass" value="edu.xawl.work.job.OverTimeJob"></property>   
+     </bean> 
+     
+     <!-- 0/5 * * * * ? -->
+     
+     <bean id="CronTriggerBean2" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+	    <property name="jobDetail" ref="NumberTipJob"></property>  
+	    <property name="cronExpression" value="0 0 1 * * ?"></property>  
+	</bean>
+	
+	<!-- 具体任务 -->
+	<bean id="NumberTipJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">    
+	     <property name="name" value="NumberTipJob"></property>    
+	     <property name="jobClass" value="edu.xawl.work.job.NumberTipJob"></property>   
+     </bean> 
+	
+	
 	<bean id="jobFactory" class="edu.xawl.quartz.utils.JobFactory"></bean>
+	<!-- 调度工厂 -->
 	<bean name="quartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" >
         <property name="dataSource" ref ="dataSource" /> 
         <property name="jobFactory" ref="jobFactory"/>      
         <property name="applicationContextSchedulerContextKey" value="applicationContextKey"/>
-        <property name="configLocation" value="classpath:quartz.properties"/>			
+        <property name="configLocation" value="classpath:quartz.properties"/>
+
+		<!-- 调度器触发器 -->        
+        <property name="triggers">  
+            <list>  
+              <ref bean="CronTriggerBean"/> 
+              <ref bean="CronTriggerBean2"/>   
+            </list>  
+        </property>			
     </bean>
 	
 

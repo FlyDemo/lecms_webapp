@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="${ctx}/css/navigation/layui.css">
 <script src="${ctx}/js/navigation/layui.js"></script>
+<script src="${ctx}/js/user/editUserPage.js"></script>
 <style>
 .layui-form-item{
 	padding:20px 0px 10px 30px;
@@ -40,18 +41,21 @@
 </head>
 <body>
 	<form class="layui-form userEditForm" action="#" method="post">
+		<input type="hidden" id="op" name="op" value="${op}"/>
+		<input type="hidden" id="id" name="id" value="${userBean.id}"/>
+		<input type="hidden" id="role" name="role" value="${userBean.leval}"/>
 		<div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">姓名</label>
 				<div class="layui-input-block">
-					<input type="text" name="name" class="layui-input required">
+					<input type="text" name="name" class="layui-input required" value="${userBean.name}">
 				</div>
 			</div>
 			
 			<div class="layui-form-item">
 				<label class="layui-form-label">登陆名</label>
 				<div class="layui-input-block">
-					<input type="text" name="loginName" class="layui-input required">
+					<input type="text" name="loginName" class="layui-input required" value="${userBean.loginName }">
 				</div>
 			</div>
 			
@@ -65,7 +69,7 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">电子邮箱</label>
 				<div class="layui-input-block">
-					<input type="text" name="mail" class="layui-input email">
+					<input type="text" name="mail" class="layui-input email" value="${userBean.mail}">
 				</div>
 			</div>
 			
@@ -73,8 +77,8 @@
 				<label class="layui-form-label">用户角色</label>
 				<div class="layui-input-inline">
 					<select name="leval" lay-filter="interest-search" lay-search lay-write>
-						<option value="0" selected>普通会员</option>
-						<option value="1">维修人员</option>
+						<option value="ORDINARY" <c:if test="${userBean.leval eq 'ORDINARY' }">selected</c:if>>普通会员</option>
+						<option value="REPAIR_MAN" <c:if test="${userBean.leval eq 'REPAIR_MAN' }">selected</c:if>>维修人员</option>
 					</select>
 				</div>
 			</div>
@@ -82,7 +86,7 @@
 			<div class="layui-form-item" pane>
 				<label class="layui-form-label">是否启用</label>
 				<div class="layui-input-block" name="deleted">
-					<input type="checkbox" checked name="open" lay-skin="switch" lay-filter="switchTest" lay-text="ON|OFF">
+					<input type="checkbox" <c:if test="${userBean.deleted eq false }">checked</c:if> name="deleted" lay-skin="switch" lay-filter="switchTest" lay-text="启用|禁用">
 				</div>
 			</div>
 			

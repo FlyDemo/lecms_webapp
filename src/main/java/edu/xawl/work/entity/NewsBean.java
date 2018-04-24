@@ -55,7 +55,6 @@ public class NewsBean extends BaseBean{
 	 */
 	private UserBean  creator = new UserBean();
  
-	@DateTimeFormat(pattern="yyyy-MM-dd") 
 	@Column(name="NEWS_TITLE")
 	public String getNewsTitle() {
 		return newsTitle;
