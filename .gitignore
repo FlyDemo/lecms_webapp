@@ -1,6 +1,4 @@
-/LECMS/
 /.settings/
-/.git/
-/target/
 /bin/
-.gitignore
+/LECMS/
+/target/
