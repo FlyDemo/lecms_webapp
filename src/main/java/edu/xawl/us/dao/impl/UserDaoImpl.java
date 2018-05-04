@@ -26,8 +26,8 @@ public class UserDaoImpl implements UserDao {
 	private BaseDao baseDao;
 	
 	public UserBean findUserByLoginName(String loginName) {
-		String hql = "from UserBean u where u.loginName = ?";
-		List list = baseDao.findByHql(hql, loginName);
+		String hql = "from UserBean u where u.loginName = ? and u.deleted=? ";
+		List list = baseDao.findByHql(hql, loginName,false);
 		if(list.size()>0) return (UserBean) list.get(0);
 		return null;
 	}

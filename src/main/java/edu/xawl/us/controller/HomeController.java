@@ -4,6 +4,11 @@ import java.util.List;
 
 
 
+
+
+
+
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -16,6 +21,7 @@ import com.alibaba.fastjson.JSONObject;
 import edu.xawl.common.service.CommonService;
 import edu.xawl.material.entity.MaterialBean;
 import edu.xawl.material.enums.MaterialStatus;
+import edu.xawl.us.enums.UserLeval;
 import edu.xawl.work.entity.InstitutionBean;
 import edu.xawl.work.entity.NewsBean;
 
@@ -61,6 +67,20 @@ public class HomeController {
 		model.addAttribute("materialAll",findByHql2);
 		model.addAttribute("material", subList2);
 		
+		String hql3 = " select count(*) from UserBean u where u.leval = ? ";  //普通会员数量    //维修人员
+		String hql6 = " select count(*) from MaterialCategoryBean mcb where mcb.deleted=? ";  //器材分类数
+		String hql7 = " select count(*) from MaterialDetailBean mdb where mdb.status!=? ";  //器材总数量
+		
+		List<Integer> ordinaryNum = commonService.findByHql(hql3, UserLeval.ORDINARY);
+		List<Integer> repairNum = commonService.findByHql(hql3, UserLeval.REPAIR_MAN);
+		List<Integer> materialCategoryNum = commonService.findByHql(hql6, false);
+		List<Integer> materialNum = commonService.findByHql(hql7, MaterialStatus.DELETED);
+		
+		model.addAttribute("ordinaryNum", ordinaryNum.get(0));
+		model.addAttribute("repairNum", repairNum.get(0));
+		model.addAttribute("materialCategoryNum", materialCategoryNum.get(0));
+		model.addAttribute("materialNum", materialNum.get(0));
+		
 		return "/index/default";
 	}
 	
@@ -92,8 +112,11 @@ public class HomeController {
 		MaterialBean material = (MaterialBean) commonService.findById(MaterialBean.class, id);
 		String hql = " select SUM(mdb.usedNum) from MaterialDetailBean mdb where mdb.material=? and mdb.status!=? ";
 		List<Integer> materialDetails = commonService.findByHql(hql, material,MaterialStatus.DELETED);
-		obj.put("canUse", material.getUseNum());
+		String hql2 = "select COUNT(*) from MaterialDetailBean mdb where mdb.material=? ";
+		List<Integer> total = commonService.findByHql(hql2, material);
+		obj.put("canUse", material.getUseNum()*Integer.valueOf(String.valueOf(total.get(0))));
 		obj.put("used", materialDetails.get(0));
+		System.out.println(obj.get("canUse")+"-----"+obj.get("used"));
 		return obj.toString();
 	}
 	
